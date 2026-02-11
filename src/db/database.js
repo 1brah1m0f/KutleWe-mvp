@@ -3,7 +3,9 @@ const path = require("path");
 const sqlite3 = require("sqlite3");
 const { open } = require("sqlite");
 
-const DB_DIR = path.join(__dirname, "..", "..", "data");
+// Vercel serverless: yalniz /tmp yazila biler
+const isVercel = Boolean(process.env.VERCEL);
+const DB_DIR = isVercel ? "/tmp" : path.join(__dirname, "..", "..", "data");
 const DB_PATH = path.join(DB_DIR, "kutlewe.db");
 
 let dbInstance = null;
