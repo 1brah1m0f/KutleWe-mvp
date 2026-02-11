@@ -1,0 +1,24 @@
+{
+  "name": "kutlewe-mvp",
+  "version": "1.0.0",
+  "description": "KutleWe platformasi ucun multi-page MVP",
+  "main": "src/server.js",
+  "scripts": {
+    "start": "node src/server.js",
+    "dev": "node --watch src/server.js",
+    "db:init": "node src/db/init-db.js"
+  },
+  "keywords": [
+    "kutlewe",
+    "forum",
+    "opportunities",
+    "sqlite"
+  ],
+  "author": "",
+  "license": "MIT",
+  "dependencies": {
+    "express": "^4.21.2",
+    "sqlite": "^5.1.1",
+    "sqlite3": "^5.1.7"
+  }
+}
