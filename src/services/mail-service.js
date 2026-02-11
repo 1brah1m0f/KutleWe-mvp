@@ -1,10 +1,16 @@
 const nodemailer = require("nodemailer");
 
 let transporter = null;
+let transporterInitState = null;
 
 function getTransporter() {
+  if (transporterInitState) {
+    return transporterInitState;
+  }
+
   if (transporter) {
-    return transporter;
+    transporterInitState = { transport: transporter, missing: [] };
+    return transporterInitState;
   }
 
   const host = String(process.env.SMTP_HOST || "").trim();
@@ -13,8 +19,14 @@ function getTransporter() {
   const user = String(process.env.SMTP_USER || "").trim();
   const pass = String(process.env.SMTP_PASS || "").trim();
 
-  if (!host || !user || !pass) {
-    return null;
+  const missing = [];
+  if (!host) missing.push("SMTP_HOST");
+  if (!user) missing.push("SMTP_USER");
+  if (!pass) missing.push("SMTP_PASS");
+
+  if (missing.length > 0) {
+    transporterInitState = { transport: null, missing };
+    return transporterInitState;
   }
 
   transporter = nodemailer.createTransport({
@@ -24,13 +36,14 @@ function getTransporter() {
     auth: { user, pass }
   });
 
-  return transporter;
+  transporterInitState = { transport: transporter, missing: [] };
+  return transporterInitState;
 }
 
 async function sendOtpEmail(email, code, purpose = "login") {
   const from = String(process.env.SMTP_FROM || "KutleWe <no-reply@kutlewe.local>");
   const to = String(email || "").trim().toLowerCase();
-  const transport = getTransporter();
+  const { transport, missing } = getTransporter();
   const title = purpose === "admin" ? "Admin giris kodu" : "Giris kodu";
 
   const html = `
@@ -44,9 +57,10 @@ async function sendOtpEmail(email, code, purpose = "login") {
 
   if (!transport) {
     console.log(`[MAIL-FAKE] ${to} -> ${code}`);
+    const missingText = missing.length ? ` Bos ENV: ${missing.join(", ")}` : "";
     return {
       delivered: false,
-      message: "SMTP konfiqurasiya olunmayib. Kod server log-a yazildi."
+      message: `SMTP konfiqurasiya olunmayib.${missingText} Kod server log-a yazildi.`
     };
   }
 
