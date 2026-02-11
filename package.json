@@ -1,18 +1,17 @@
 {
   "name": "kutlewe-mvp",
   "version": "1.0.0",
-  "description": "KutleWe platformasi ucun multi-page MVP",
-  "main": "src/server.js",
+  "description": "KutleWe minimal backend (Express + Supabase Postgres)",
+  "main": "server.js",
   "scripts": {
-    "start": "node src/server.js",
-    "dev": "node --watch src/server.js",
-    "db:init": "node src/db/init-db.js"
+    "start": "node server.js",
+    "dev": "node --watch server.js"
   },
   "keywords": [
     "kutlewe",
-    "forum",
-    "opportunities",
-    "sqlite"
+    "express",
+    "postgres",
+    "supabase"
   ],
   "author": "",
   "license": "MIT",
@@ -20,7 +19,7 @@
     "dotenv": "^16.4.7",
     "express": "^4.21.2",
     "nodemailer": "^6.10.1",
-    "sqlite": "^5.1.1",
-    "sqlite3": "^5.1.7"
+    "openai": "^4.83.0",
+    "pg": "^8.13.1"
   }
 }
