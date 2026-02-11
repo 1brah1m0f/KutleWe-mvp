@@ -3,13 +3,7 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>KutleWe | Haqqımızda</title>
-    <link rel="preconnect" href="https://fonts.googleapis.com" />
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-    <link
-      href="https://fonts.googleapis.com/css2?family=Sora:wght@400;500;600;700;800&family=Space+Grotesk:wght@500;700&display=swap"
-      rel="stylesheet"
-    />
+    <title>KutleWe | Haqqimizda</title>
     <link rel="stylesheet" href="/assets/css/app.css" />
     <script defer src="/assets/js/main.js"></script>
   </head>
@@ -20,69 +14,58 @@
           <span class="brand-mark">K</span>
           <span class="brand-copy">
             <strong>KutleWe</strong>
-            <small>Fürsətlər + Community</small>
+            <small>Haqqimizda</small>
           </span>
         </a>
-
-        <nav class="menu" aria-label="Əsas menyu">
+        <nav class="menu">
           <a data-nav href="/index.html">Ana</a>
-          <a data-nav href="/opportunities.html">Fürsətlər</a>
+          <a data-nav href="/opportunities.html">Fursetler</a>
           <a data-nav href="/forum.html">Forum</a>
-          <a data-nav href="/about.html">Haqqımızda</a>
-          <a class="btn btn-outline" href="/forum.html">Profil yarat</a>
+          <a data-nav href="/community.html">Community</a>
+          <a data-nav href="/about.html">Haqqimizda</a>
+          <a data-auth="guest" class="btn btn-outline" href="/login.html">Login</a>
+          <button data-auth="user" hidden data-action="logout" class="btn btn-danger" type="button">
+            Cixis
+          </button>
         </nav>
       </header>
 
-      <section class="page-hero">
-        <h1>KutleWe nəyi həll edir?</h1>
-        <p>
-          KutleWe gənclərin fürsət axtarışı və icma dəstəyini eyni platformada birləşdirir.
-          Məqsəd əlavə vaxt və resurs itkisinin qarşısını almaqdır.
+      <section class="card">
+        <h1 class="page-title">KutleWe ne edir?</h1>
+        <p class="muted">
+          Platforma gencelerin ehtiyac duydugu imkanlari vahid mekanda birlesdirir.
+          Interface sade saxlanilir ki, vaxt itkisi olmasin.
         </p>
       </section>
 
-      <section class="about-grid">
-        <article class="surface about-block">
-          <h2>1) Mərkəzləşdirilmiş Fürsətlər Bazası</h2>
-          <p>
-            Fərqli saytlar arasında keçid etmədən internship, volunteer, hackathon və karyera
-            tədbirlərini tək yerdə görürsünüz. Düzgün filtr və AI filtr birgə işləyir.
-          </p>
+      <section class="grid grid-2" style="margin-top: 0.8rem">
+        <article class="card">
+          <h2 class="page-title" style="font-size: 1.2rem">1) Furset bazasi</h2>
           <ul>
-            <li>Kateqoriya, format, məkan, tarix və açar söz filtrləri</li>
-            <li>AI prompt ilə avtomatik filtr çıxarışı</li>
-            <li>Daha uyğun nəticələr üçün məntiqi keyword skoru</li>
+            <li>Tecrube, konulluluk, hakaton, karyera elanlari</li>
+            <li>Duzgun filtr + AI filtr</li>
+            <li>Tarix, format, mekan uzre secim</li>
           </ul>
         </article>
-
-        <article class="surface about-block">
-          <h2>2) İnteraktiv Forum və Dəstək</h2>
-          <p>
-            İstifadəçilər thread açır, digər istifadəçilər isə həmin başlığın ayrıca detal
-            səhifəsində form vasitəsilə cavab verir. Bu, canlı icma yaradır.
-          </p>
+        <article class="card">
+          <h2 class="page-title" style="font-size: 1.2rem">2) Forum + Community</h2>
           <ul>
-            <li>Hər başlıq üçün ayrıca səhifə (`thread.html?id=...`)</li>
-            <li>Cavab formu və real-time yenilənən reply siyahısı</li>
-            <li>Mövzu yaratma formu ilə bilik paylaşımı</li>
+            <li>Thread acmaq ve cavab formu ile mubahise</li>
+            <li>Umumi chat ve qruplar yaratmaq</li>
+            <li>Elan paylasmaq, admin tesdiqi</li>
           </ul>
         </article>
       </section>
 
-      <section class="surface section">
-        <h2>Texniki memarlıq</h2>
-        <p class="hero-lead" style="margin: 0">
-          Backend: Node.js + Express, DB: SQLite (`opportunities`, `threads`, `thread_replies`),
-          Frontend: multi-page HTML/CSS/JS, AI: chatbot + AI filter (OpenAI API və fallback
-          məntiqi).
+      <section class="card" style="margin-top: 0.8rem">
+        <h2 class="page-title" style="font-size: 1.2rem">Auth sistemi</h2>
+        <p class="muted">
+          Login OTP kodla isleyir. Gmail SMTP qurulduqda kod email-e gedir, qurulmayanda test
+          rejimde kod API cavabinda verilir.
         </p>
       </section>
 
-      <footer class="footer">
-        © 2026 KutleWe. Gənclər üçün imkanlar və icma vahid məkanda.
-      </footer>
+      <footer class="footer">© 2026 KutleWe</footer>
     </main>
-
-    <div id="chatbot-root"></div>
   </body>
 </html>

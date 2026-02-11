@@ -1,0 +1,107 @@
+<!doctype html>
+<html lang="az">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>KutleWe | Profil</title>
+    <link rel="stylesheet" href="/assets/css/app.css" />
+    <script defer src="/assets/js/main.js"></script>
+    <script defer src="/assets/js/profile.js"></script>
+  </head>
+  <body>
+    <main class="site-shell">
+      <header class="topbar">
+        <a class="brand" href="/index.html">
+          <span class="brand-mark">K</span>
+          <span class="brand-copy">
+            <strong>KutleWe</strong>
+            <small>LinkedIn tipli profil</small>
+          </span>
+        </a>
+        <nav class="menu">
+          <a data-nav href="/index.html">Ana</a>
+          <a data-nav href="/opportunities.html">Fursetler</a>
+          <a data-nav href="/community.html">Community</a>
+          <a data-nav href="/profile.html">Profil</a>
+          <a data-auth="guest" class="btn btn-outline" href="/login.html">Login</a>
+          <button data-auth="user" hidden data-action="logout" class="btn btn-danger" type="button">
+            Cixis
+          </button>
+        </nav>
+      </header>
+
+      <section class="card">
+        <div class="profile-head">
+          <img id="profile-avatar" class="avatar" alt="Avatar" />
+          <div>
+            <h1 id="profile-name" class="profile-name">Profil</h1>
+            <p id="profile-headline" class="muted"></p>
+            <p id="profile-location" class="meta"></p>
+          </div>
+        </div>
+        <p id="profile-about" style="margin-top: 0.7rem"></p>
+        <div id="profile-skills" class="actions" style="margin-top: 0.5rem"></div>
+      </section>
+
+      <section id="edit-card" class="card" style="margin-top: 0.8rem">
+        <h2 class="page-title" style="font-size: 1.15rem">Profili redakte et</h2>
+        <form id="profile-form" class="grid">
+          <div class="grid grid-2">
+            <div class="field">
+              <label for="name">Ad</label>
+              <input id="name" name="name" required />
+            </div>
+            <div class="field">
+              <label for="headline">Headline</label>
+              <input id="headline" name="headline" placeholder="Mesele: Data Analyst | Student" />
+            </div>
+          </div>
+          <div class="grid grid-2">
+            <div class="field">
+              <label for="location">Mekan</label>
+              <input id="location" name="location" placeholder="Baki" />
+            </div>
+            <div class="field">
+              <label for="skills">Skills (vergulle)</label>
+              <input id="skills" name="skills" placeholder="SQL, Excel, Python" />
+            </div>
+          </div>
+          <div class="grid grid-2">
+            <div class="field">
+              <label for="linkedin_url">LinkedIn URL</label>
+              <input id="linkedin_url" name="linkedin_url" placeholder="https://linkedin.com/in/..." />
+            </div>
+            <div class="field">
+              <label for="avatar_url">Avatar URL</label>
+              <input id="avatar_url" name="avatar_url" placeholder="https://..." />
+            </div>
+          </div>
+          <div class="field">
+            <label for="about">About</label>
+            <textarea id="about" name="about" placeholder="Ozunuzu qisa tanidin."></textarea>
+          </div>
+          <div class="actions">
+            <button class="btn btn-primary" type="submit">Yadda saxla</button>
+          </div>
+          <p id="profile-status" class="status"></p>
+        </form>
+      </section>
+
+      <section id="activity-card" class="card" style="margin-top: 0.8rem">
+        <h2 class="page-title" style="font-size: 1.15rem">Faaligim</h2>
+        <div class="grid grid-2">
+          <div>
+            <h3>Elanlarim</h3>
+            <div id="my-announcements" class="list"></div>
+          </div>
+          <div>
+            <h3>Forum movzularim</h3>
+            <div id="my-threads" class="list"></div>
+          </div>
+        </div>
+      </section>
+
+      <footer class="footer">© 2026 KutleWe</footer>
+    </main>
+  </body>
+</html>

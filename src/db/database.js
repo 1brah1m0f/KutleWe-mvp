@@ -13,157 +13,82 @@ const opportunitySeed = [
     title: "PASHA Bank Data Intern Program",
     organization: "PASHA Bank",
     categoryKey: "internship",
-    categoryLabel: "Təcrübə",
-    location: "Bakı",
+    categoryLabel: "Tecrube",
+    location: "Baki",
     mode: "Hibrid",
     deadlineDate: "2026-03-15",
     duration: "3 ay",
-    description:
-      "Data analitika istiqamətində internship proqramı. SQL, Excel və vizuallaşdırma bacarıqları üstünlükdür.",
+    description: "Data analitika istiqametinde internship proqrami.",
     externalUrl: "https://example.com/opportunities/pasha-data-intern"
   },
   {
     title: "UNICEF Youth Volunteer Drive",
-    organization: "UNICEF Azərbaycan",
+    organization: "UNICEF Azerbaycan",
     categoryKey: "volunteering",
-    categoryLabel: "Könüllülük",
-    location: "Bakı",
+    categoryLabel: "Konulluluk",
+    location: "Baki",
     mode: "Onsite",
     deadlineDate: "2026-03-21",
     duration: "2 ay",
-    description:
-      "Gənclərlə sosial layihələrdə iştirak, tədbir təşkilatına dəstək və community fəaliyyəti.",
+    description: "Genclerle sosial layihelerde istirak ve community desteyi.",
     externalUrl: "https://example.com/opportunities/unicef-volunteer"
   },
   {
     title: "CodeStorm 2026",
-    organization: "TechHub Bakı",
+    organization: "TechHub Baki",
     categoryKey: "hackathon",
     categoryLabel: "Hakaton",
-    location: "Bakı",
+    location: "Baki",
     mode: "Onsite",
     deadlineDate: "2026-04-09",
     duration: "48 saat",
-    description:
-      "Komanda ilə məhsul ideyasını prototipə çevir və münsiflər qarşısında təqdim et.",
+    description: "Komanda ile mehsul ideyasini prototipe cevir ve teqdim et.",
     externalUrl: "https://example.com/opportunities/codestorm-2026"
   },
   {
     title: "Career Launch Networking Night",
     organization: "ADA Career Center",
     categoryKey: "career",
-    categoryLabel: "Karyera tədbiri",
-    location: "Bakı",
+    categoryLabel: "Karyera",
+    location: "Baki",
     mode: "Onsite",
     deadlineDate: "2026-03-29",
-    duration: "1 gün",
-    description:
-      "HR mütəxəssisləri və şirkət nümayəndələri ilə networking sessiyası.",
+    duration: "1 gun",
+    description: "HR mutexessisleri ile networking sessiyasi.",
     externalUrl: "https://example.com/opportunities/career-launch-night"
-  },
-  {
-    title: "Azercell UX Internship",
-    organization: "Azercell",
-    categoryKey: "internship",
-    categoryLabel: "Təcrübə",
-    location: "Bakı",
-    mode: "Hibrid",
-    deadlineDate: "2026-04-05",
-    duration: "4 ay",
-    description:
-      "UX research, wireframe və prototipləmə üzrə intern rolu. Figma təcrübəsi arzuolunandır.",
-    externalUrl: "https://example.com/opportunities/azercell-ux-internship"
-  },
-  {
-    title: "Green Future Volunteering Camp",
-    organization: "EcoAction",
-    categoryKey: "volunteering",
-    categoryLabel: "Könüllülük",
-    location: "Quba",
-    mode: "Onsite",
-    deadlineDate: "2026-04-12",
-    duration: "2 gün",
-    description:
-      "Ətraf mühit yönümlü düşərgə. Yerli icma ilə ekoloji aksiyalar və maarifləndirmə.",
-    externalUrl: "https://example.com/opportunities/green-future-camp"
-  },
-  {
-    title: "Remote Product Analytics Internship",
-    organization: "FintechX",
-    categoryKey: "internship",
-    categoryLabel: "Təcrübə",
-    location: "Remote",
-    mode: "Remote",
-    deadlineDate: "2026-03-30",
-    duration: "3 ay",
-    description:
-      "Remote intern proqramı. Product metrikaları, cohort analizi və dashboard qurulması.",
-    externalUrl: "https://example.com/opportunities/remote-product-analytics"
-  },
-  {
-    title: "Startup Weekend Gəncə",
-    organization: "Innovation Hub",
-    categoryKey: "hackathon",
-    categoryLabel: "Hakaton",
-    location: "Gəncə",
-    mode: "Onsite",
-    deadlineDate: "2026-04-18",
-    duration: "3 gün",
-    description:
-      "Startap ideyasının inkişafı, mentor sessiyaları və final pitch gecəsi.",
-    externalUrl: "https://example.com/opportunities/startup-weekend-gence"
   }
 ];
 
 const threadSeed = [
   {
-    title: "Hakatona komanda tapmaq üçün ən yaxşı yol nədir?",
-    body: "Discord və LinkedIn qrupları işə yarayır? Təcrübəsi olanlar konkret addımları yaza bilər?",
+    title: "Hakatona komanda tapmaq ucun en yaxsi yol nedir?",
+    body: "Discord ve LinkedIn qruplari ise yarayir? Tecrubesi olanlar addimlari yaza biler?",
     author: "Aylin",
     tag: "Hakaton",
     createdAt: "2026-02-10T10:15:00Z"
   },
   {
-    title: "Data intern müsahibəsinə necə hazırlaşdınız?",
-    body: "SQL, Excel, case-study və davranış sualları arasında prioriteti necə bölmək daha doğrudur?",
+    title: "Data intern musahibesine nece hazirlasdiniz?",
+    body: "SQL, Excel ve case-study suallarinda prioritet nece olmalidir?",
     author: "Tural",
-    tag: "Təcrübə",
+    tag: "Tecrube",
     createdAt: "2026-02-10T07:40:00Z"
-  },
-  {
-    title: "Könüllülük CV-də həqiqətən təsir edirmi?",
-    body: "HR baxışında könüllülük layihələri nə qədər önəmlidir? Real nümunə paylaşa bilərsiniz?",
-    author: "Nərmin",
-    tag: "Könüllülük",
-    createdAt: "2026-02-09T17:25:00Z"
   }
 ];
 
 const replySeedByThreadTitle = {
-  "Hakatona komanda tapmaq üçün ən yaxşı yol nədir?": [
+  "Hakatona komanda tapmaq ucun en yaxsi yol nedir?": [
     {
       author: "Rauf",
-      body: "Mən əvvəlcə forumlarda komanda üzvlərinin texniki stack-i barədə soruşuram, sonra qısa call edirəm.",
+      body: "Evvel texniki stack uzre qisa yoxlama edin, sonra rol bolgusu qurin.",
       createdAt: "2026-02-10T12:05:00Z"
-    },
-    {
-      author: "Ləman",
-      body: "Keçən il Telegram qrupundan tapdığım komanda ilə qatılmışdım. Ən vacibi öhdəlik bölgüsüdür.",
-      createdAt: "2026-02-10T13:21:00Z"
     }
   ],
-  "Data intern müsahibəsinə necə hazırlaşdınız?": [
+  "Data intern musahibesine nece hazirlasdiniz?": [
     {
       author: "Murad",
-      body: "Əvvəl SQL və analitik düşüncə suallarını gücləndir, sonra şirkətə uyğun mini case-lər həll et.",
+      body: "Evvel SQL ve analitik dusunce, sonra mini case-study.",
       createdAt: "2026-02-10T09:02:00Z"
-    }
-  ],
-  "Könüllülük CV-də həqiqətən təsir edirmi?": [
-    {
-      author: "Səbinə",
-      body: "Bəli, xüsusilə nəticə göstəricisi ilə yazanda yaxşı təsir edir. Məsələn, təşkil etdiyin tədbir sayı və iştirakçı sayı.",
-      createdAt: "2026-02-09T18:13:00Z"
     }
   ]
 };
@@ -203,102 +128,223 @@ async function createSchema(db) {
       FOREIGN KEY (thread_id) REFERENCES threads(id) ON DELETE CASCADE
     );
 
+    CREATE TABLE IF NOT EXISTS users (
+      id INTEGER PRIMARY KEY AUTOINCREMENT,
+      email TEXT NOT NULL UNIQUE,
+      name TEXT NOT NULL DEFAULT 'Istifadeci',
+      headline TEXT NOT NULL DEFAULT '',
+      about TEXT NOT NULL DEFAULT '',
+      location TEXT NOT NULL DEFAULT '',
+      skills TEXT NOT NULL DEFAULT '',
+      linkedin_url TEXT NOT NULL DEFAULT '',
+      avatar_url TEXT NOT NULL DEFAULT '',
+      is_admin INTEGER NOT NULL DEFAULT 0,
+      created_at TEXT NOT NULL DEFAULT CURRENT_TIMESTAMP,
+      updated_at TEXT NOT NULL DEFAULT CURRENT_TIMESTAMP
+    );
+
+    CREATE TABLE IF NOT EXISTS login_codes (
+      id INTEGER PRIMARY KEY AUTOINCREMENT,
+      email TEXT NOT NULL,
+      code_hash TEXT NOT NULL,
+      purpose TEXT NOT NULL DEFAULT 'login',
+      expires_at TEXT NOT NULL,
+      used_at TEXT,
+      created_at TEXT NOT NULL DEFAULT CURRENT_TIMESTAMP
+    );
+
+    CREATE TABLE IF NOT EXISTS sessions (
+      id INTEGER PRIMARY KEY AUTOINCREMENT,
+      user_id INTEGER NOT NULL,
+      token_hash TEXT NOT NULL UNIQUE,
+      expires_at TEXT NOT NULL,
+      created_at TEXT NOT NULL DEFAULT CURRENT_TIMESTAMP,
+      last_seen_at TEXT NOT NULL DEFAULT CURRENT_TIMESTAMP,
+      FOREIGN KEY (user_id) REFERENCES users(id) ON DELETE CASCADE
+    );
+
+    CREATE TABLE IF NOT EXISTS announcements (
+      id INTEGER PRIMARY KEY AUTOINCREMENT,
+      title TEXT NOT NULL,
+      body TEXT NOT NULL,
+      author_user_id INTEGER NOT NULL,
+      is_approved INTEGER NOT NULL DEFAULT 0,
+      created_at TEXT NOT NULL DEFAULT CURRENT_TIMESTAMP,
+      updated_at TEXT NOT NULL DEFAULT CURRENT_TIMESTAMP,
+      FOREIGN KEY (author_user_id) REFERENCES users(id) ON DELETE CASCADE
+    );
+
+    CREATE TABLE IF NOT EXISTS chat_groups (
+      id INTEGER PRIMARY KEY AUTOINCREMENT,
+      name TEXT NOT NULL,
+      description TEXT NOT NULL DEFAULT '',
+      is_public INTEGER NOT NULL DEFAULT 1,
+      creator_user_id INTEGER,
+      created_at TEXT NOT NULL DEFAULT CURRENT_TIMESTAMP,
+      FOREIGN KEY (creator_user_id) REFERENCES users(id) ON DELETE SET NULL
+    );
+
+    CREATE TABLE IF NOT EXISTS group_members (
+      group_id INTEGER NOT NULL,
+      user_id INTEGER NOT NULL,
+      role TEXT NOT NULL DEFAULT 'member',
+      joined_at TEXT NOT NULL DEFAULT CURRENT_TIMESTAMP,
+      PRIMARY KEY (group_id, user_id),
+      FOREIGN KEY (group_id) REFERENCES chat_groups(id) ON DELETE CASCADE,
+      FOREIGN KEY (user_id) REFERENCES users(id) ON DELETE CASCADE
+    );
+
+    CREATE TABLE IF NOT EXISTS group_messages (
+      id INTEGER PRIMARY KEY AUTOINCREMENT,
+      group_id INTEGER NOT NULL,
+      user_id INTEGER NOT NULL,
+      body TEXT NOT NULL,
+      created_at TEXT NOT NULL DEFAULT CURRENT_TIMESTAMP,
+      FOREIGN KEY (group_id) REFERENCES chat_groups(id) ON DELETE CASCADE,
+      FOREIGN KEY (user_id) REFERENCES users(id) ON DELETE CASCADE
+    );
+
     CREATE INDEX IF NOT EXISTS idx_opportunities_category ON opportunities(category_key);
     CREATE INDEX IF NOT EXISTS idx_opportunities_deadline ON opportunities(deadline_date);
     CREATE INDEX IF NOT EXISTS idx_threads_created ON threads(created_at);
     CREATE INDEX IF NOT EXISTS idx_replies_thread ON thread_replies(thread_id);
+    CREATE INDEX IF NOT EXISTS idx_users_email ON users(email);
+    CREATE INDEX IF NOT EXISTS idx_codes_email ON login_codes(email);
+    CREATE INDEX IF NOT EXISTS idx_codes_expires ON login_codes(expires_at);
+    CREATE INDEX IF NOT EXISTS idx_sessions_user ON sessions(user_id);
+    CREATE INDEX IF NOT EXISTS idx_ann_author ON announcements(author_user_id);
+    CREATE INDEX IF NOT EXISTS idx_groups_public ON chat_groups(is_public);
+    CREATE INDEX IF NOT EXISTS idx_messages_group ON group_messages(group_id, created_at);
   `);
 }
 
-async function seedIfNeeded(db) {
-  const { count: opportunityCount } = await db.get(
-    "SELECT COUNT(*) as count FROM opportunities"
+async function seedOpportunities(db) {
+  const { count } = await db.get("SELECT COUNT(*) as count FROM opportunities");
+  if (count > 0) {
+    return;
+  }
+
+  const statement = await db.prepare(`
+    INSERT INTO opportunities (
+      title,
+      organization,
+      category_key,
+      category_label,
+      location,
+      mode,
+      deadline_date,
+      duration,
+      description,
+      external_url
+    ) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
+  `);
+
+  for (const item of opportunitySeed) {
+    await statement.run(
+      item.title,
+      item.organization,
+      item.categoryKey,
+      item.categoryLabel,
+      item.location,
+      item.mode,
+      item.deadlineDate,
+      item.duration,
+      item.description,
+      item.externalUrl
+    );
+  }
+
+  await statement.finalize();
+}
+
+async function seedThreads(db) {
+  const { count } = await db.get("SELECT COUNT(*) as count FROM threads");
+  if (count > 0) {
+    return;
+  }
+
+  const statement = await db.prepare(`
+    INSERT INTO threads (title, body, author, tag, created_at)
+    VALUES (?, ?, ?, ?, ?)
+  `);
+
+  for (const thread of threadSeed) {
+    await statement.run(thread.title, thread.body, thread.author, thread.tag, thread.createdAt);
+  }
+  await statement.finalize();
+
+  const replyCountRow = await db.get("SELECT COUNT(*) as count FROM thread_replies");
+  if (replyCountRow.count > 0) {
+    return;
+  }
+
+  const threads = await db.all("SELECT id, title FROM threads");
+  const threadIdByTitle = new Map(threads.map((row) => [row.title, row.id]));
+  const replyStatement = await db.prepare(`
+    INSERT INTO thread_replies (thread_id, author, body, created_at)
+    VALUES (?, ?, ?, ?)
+  `);
+
+  for (const [title, replies] of Object.entries(replySeedByThreadTitle)) {
+    const threadId = threadIdByTitle.get(title);
+    if (!threadId) {
+      continue;
+    }
+    for (const reply of replies) {
+      await replyStatement.run(threadId, reply.author, reply.body, reply.createdAt);
+    }
+  }
+
+  await replyStatement.finalize();
+}
+
+async function ensureDefaultAdminUser(db) {
+  const adminEmail = String(process.env.ADMIN_EMAIL || "admin@kutlewe.az").trim().toLowerCase();
+  if (!adminEmail) {
+    return;
+  }
+
+  const existing = await db.get("SELECT id FROM users WHERE email = ?", [adminEmail]);
+  if (existing) {
+    await db.run(
+      "UPDATE users SET is_admin = 1, updated_at = CURRENT_TIMESTAMP WHERE id = ?",
+      [existing.id]
+    );
+    return;
+  }
+
+  await db.run(
+    `
+      INSERT INTO users (email, name, is_admin)
+      VALUES (?, ?, 1)
+    `,
+    [adminEmail, "KutleWe Admin"]
   );
-  if (opportunityCount === 0) {
-    const insertOpportunity = await db.prepare(`
-      INSERT INTO opportunities (
-        title,
-        organization,
-        category_key,
-        category_label,
-        location,
-        mode,
-        deadline_date,
-        duration,
-        description,
-        external_url
-      )
-      VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
-    `);
+}
 
-    for (const item of opportunitySeed) {
-      await insertOpportunity.run(
-        item.title,
-        item.organization,
-        item.categoryKey,
-        item.categoryLabel,
-        item.location,
-        item.mode,
-        item.deadlineDate,
-        item.duration,
-        item.description,
-        item.externalUrl
-      );
-    }
-    await insertOpportunity.finalize();
+async function ensureDefaultGroup(db) {
+  const row = await db.get("SELECT COUNT(*) as count FROM chat_groups");
+  if (row.count > 0) {
+    return;
   }
 
-  const { count: threadCount } = await db.get("SELECT COUNT(*) as count FROM threads");
-  if (threadCount === 0) {
-    const insertThread = await db.prepare(`
-      INSERT INTO threads (
-        title,
-        body,
-        author,
-        tag,
-        created_at
-      )
-      VALUES (?, ?, ?, ?, ?)
-    `);
+  await db.run(
+    `
+      INSERT INTO chat_groups (name, description, is_public)
+      VALUES (?, ?, 1)
+    `,
+    [
+      "Umumi chat",
+      "Butun istifadecilerin qoşula bildiyi aciq qrup."
+    ]
+  );
+}
 
-    for (const thread of threadSeed) {
-      await insertThread.run(
-        thread.title,
-        thread.body,
-        thread.author,
-        thread.tag,
-        thread.createdAt
-      );
-    }
-    await insertThread.finalize();
-  }
-
-  const { count: replyCount } = await db.get("SELECT COUNT(*) as count FROM thread_replies");
-  if (replyCount === 0) {
-    const insertReply = await db.prepare(`
-      INSERT INTO thread_replies (
-        thread_id,
-        author,
-        body,
-        created_at
-      )
-      VALUES (?, ?, ?, ?)
-    `);
-
-    const allThreads = await db.all("SELECT id, title FROM threads");
-    const threadIdByTitle = new Map(allThreads.map((thread) => [thread.title, thread.id]));
-
-    for (const [title, replies] of Object.entries(replySeedByThreadTitle)) {
-      const threadId = threadIdByTitle.get(title);
-      if (!threadId) {
-        continue;
-      }
-      for (const reply of replies) {
-        await insertReply.run(threadId, reply.author, reply.body, reply.createdAt);
-      }
-    }
-    await insertReply.finalize();
-  }
+async function seedIfNeeded(db) {
+  await seedOpportunities(db);
+  await seedThreads(db);
+  await ensureDefaultAdminUser(db);
+  await ensureDefaultGroup(db);
 }
 
 async function initializeDatabase() {
@@ -322,7 +368,7 @@ async function initializeDatabase() {
 
 function getDatabase() {
   if (!dbInstance) {
-    throw new Error("Database initialize olunmayib. Evvelce initializeDatabase() cagrilmalidir.");
+    throw new Error("Database initialize edilmeyib.");
   }
   return dbInstance;
 }

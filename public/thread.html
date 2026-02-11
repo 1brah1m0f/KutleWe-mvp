@@ -3,13 +3,7 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>KutleWe | Thread detal</title>
-    <link rel="preconnect" href="https://fonts.googleapis.com" />
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-    <link
-      href="https://fonts.googleapis.com/css2?family=Sora:wght@400;500;600;700;800&family=Space+Grotesk:wght@500;700&display=swap"
-      rel="stylesheet"
-    />
+    <title>KutleWe | Thread</title>
     <link rel="stylesheet" href="/assets/css/app.css" />
     <script defer src="/assets/js/main.js"></script>
     <script defer src="/assets/js/thread.js"></script>
@@ -21,65 +15,53 @@
           <span class="brand-mark">K</span>
           <span class="brand-copy">
             <strong>KutleWe</strong>
-            <small>Fürsətlər + Community</small>
+            <small>Thread detay</small>
           </span>
         </a>
-
-        <nav class="menu" aria-label="Əsas menyu">
+        <nav class="menu">
           <a data-nav href="/index.html">Ana</a>
-          <a data-nav href="/opportunities.html">Fürsətlər</a>
           <a data-nav href="/forum.html">Forum</a>
-          <a data-nav href="/about.html">Haqqımızda</a>
-          <a class="btn btn-outline" href="/forum.html">Profil yarat</a>
+          <a data-nav href="/community.html">Community</a>
+          <a data-nav href="/profile.html">Profil</a>
+          <a data-auth="guest" class="btn btn-outline" href="/login.html">Login</a>
+          <button data-auth="user" hidden data-action="logout" class="btn btn-danger" type="button">
+            Cixis
+          </button>
         </nav>
       </header>
 
-      <a class="btn btn-outline" href="/forum.html">← Foruma qayıt</a>
+      <a class="btn btn-outline" href="/forum.html">← Foruma qayit</a>
 
-      <section class="surface thread-view" style="margin-top: 0.8rem">
-        <h1 id="thread-title">Thread yüklənir...</h1>
-        <p id="thread-body" class="thread-body"></p>
-        <p id="thread-meta" class="result-meta"></p>
+      <section class="card" style="margin-top: 0.8rem">
+        <h1 id="thread-title" class="page-title">Yuklenir...</h1>
+        <p id="thread-body"></p>
+        <p id="thread-meta" class="meta"></p>
       </section>
 
-      <section class="surface" style="margin-top: 0.8rem">
-        <h2>Cavablar</h2>
-        <div id="reply-list" class="reply-list">
-          <p class="result-meta">Yüklənir...</p>
-        </div>
+      <section class="card" style="margin-top: 0.8rem">
+        <h2 class="page-title" style="font-size: 1.15rem">Cavablar</h2>
+        <div id="reply-list" class="list"></div>
       </section>
 
-      <section class="surface" style="margin-top: 0.8rem">
-        <h2>Cavab yaz</h2>
-        <form id="reply-form">
+      <section class="card" style="margin-top: 0.8rem">
+        <h2 class="page-title" style="font-size: 1.15rem">Cavab yaz</h2>
+        <form id="reply-form" class="grid">
           <div class="field">
-            <label for="reply-author">Adınız</label>
-            <input id="reply-author" name="author" placeholder="Məsələn: Kamran" />
+            <label for="reply-author">Adiniz</label>
+            <input id="reply-author" name="author" placeholder="Opsional (login varsa avtomatik)" />
           </div>
-
           <div class="field">
             <label for="reply-body">Mesaj</label>
-            <textarea
-              id="reply-body"
-              name="body"
-              required
-              minlength="3"
-              placeholder="Cavabınızı yazın..."
-            ></textarea>
+            <textarea id="reply-body" name="body" required minlength="3"></textarea>
           </div>
-
-          <div class="filter-actions">
-            <button class="btn btn-primary" type="submit">Cavabı göndər</button>
+          <div class="actions">
+            <button class="btn btn-primary" type="submit">Gonder</button>
           </div>
         </form>
-        <p id="reply-status" class="status-message"></p>
+        <p id="reply-status" class="status"></p>
       </section>
 
-      <footer class="footer">
-        © 2026 KutleWe. Gənclər üçün imkanlar və icma vahid məkanda.
-      </footer>
+      <footer class="footer">© 2026 KutleWe</footer>
     </main>
-
-    <div id="chatbot-root"></div>
   </body>
 </html>

@@ -25,28 +25,22 @@ initializeOpportunityPage();
 function initializeOpportunityPage() {
   loadOpportunities(defaultFilters);
 
-  if (filterForm) {
-    filterForm.addEventListener("submit", (event) => {
-      event.preventDefault();
-      const filters = readFiltersFromForm();
-      loadOpportunities(filters);
-    });
-  }
+  filterForm?.addEventListener("submit", (event) => {
+    event.preventDefault();
+    const filters = readFiltersFromForm();
+    loadOpportunities(filters);
+  });
 
-  if (resetButton) {
-    resetButton.addEventListener("click", () => {
-      applyFiltersToForm(defaultFilters);
-      aiFeedback.textContent = "";
-      loadOpportunities(defaultFilters);
-    });
-  }
+  resetButton?.addEventListener("click", () => {
+    applyFiltersToForm(defaultFilters);
+    if (aiFeedback) aiFeedback.textContent = "";
+    loadOpportunities(defaultFilters);
+  });
 
-  if (aiFilterForm) {
-    aiFilterForm.addEventListener("submit", async (event) => {
-      event.preventDefault();
-      await runAiFilter();
-    });
-  }
+  aiFilterForm?.addEventListener("submit", async (event) => {
+    event.preventDefault();
+    await runAiFilter();
+  });
 }
 
 function readFiltersFromForm() {
@@ -68,7 +62,7 @@ function applyFiltersToForm(filters) {
 }
 
 async function loadOpportunities(filters) {
-  setLoadingState("Fürsətlər yüklənir...");
+  setLoadingState("Yuklenir...");
 
   try {
     const query = new URLSearchParams();
@@ -77,32 +71,37 @@ async function loadOpportunities(filters) {
         query.set(key, value);
       }
     });
-
     const url = query.toString() ? `/api/opportunities?${query.toString()}` : "/api/opportunities";
+
     const response = await fetch(url);
+    const data = await response.json();
     if (!response.ok) {
-      throw new Error("Fürsət API xətası");
+      throw new Error(data?.message || "Yuklenmedi.");
     }
 
-    const data = await response.json();
     renderOpportunities(data.opportunities || []);
     if (resultMeta) {
-      resultMeta.textContent = `${data.total || 0} nəticə tapıldı`;
+      resultMeta.textContent = `${data.total || 0} netice tapildi`;
     }
-  } catch (_error) {
-    renderEmpty("Fürsətlər yüklənmədi.");
+  } catch (error) {
+    renderEmpty(`Xeta: ${error.message}`);
   }
 }
 
 async function runAiFilter() {
   const prompt = String(aiPromptInput?.value || "").trim();
   if (!prompt) {
-    aiFeedback.textContent = "AI filtr üçün mətn daxil edin.";
+    if (aiFeedback) {
+      aiFeedback.textContent = "AI sorğusu bos ola bilmez.";
+      aiFeedback.className = "status error";
+    }
     return;
   }
 
-  setLoadingState("AI filtr tətbiq olunur...");
-  aiFeedback.textContent = "AI analiz edir...";
+  if (aiFeedback) {
+    aiFeedback.textContent = "AI analiz edir...";
+    aiFeedback.className = "status warn";
+  }
 
   try {
     const response = await fetch("/api/opportunities/ai-filter", {
@@ -116,24 +115,22 @@ async function runAiFilter() {
 
     const data = await response.json();
     if (!response.ok) {
-      throw new Error(data?.message || "AI filtr xətası");
+      throw new Error(data?.message || "AI filtr xetasi");
     }
 
     applyFiltersToForm(data.filters || defaultFilters);
     renderOpportunities(data.opportunities || []);
     if (resultMeta) {
-      resultMeta.textContent = `${data.total || 0} nəticə tapıldı`;
+      resultMeta.textContent = `${data.total || 0} netice tapildi`;
     }
-
     if (aiFeedback) {
-      aiFeedback.textContent = `${data.ai?.reason || "AI filtr tətbiq olundu."} Mənbə: ${
-        data.ai?.source || "unknown"
-      }`;
+      aiFeedback.textContent = data.ai?.reason || "AI filtr tetbiq edildi.";
+      aiFeedback.className = "status ok";
     }
   } catch (error) {
-    renderEmpty("AI filtr nəticə qaytarmadı.");
     if (aiFeedback) {
-      aiFeedback.textContent = `Xəta: ${error.message}`;
+      aiFeedback.textContent = error.message;
+      aiFeedback.className = "status error";
     }
   }
 }
@@ -149,57 +146,35 @@ function setLoadingState(text) {
 
 function renderEmpty(text) {
   if (!listContainer) return;
-  listContainer.innerHTML = `<div class="empty-box">${text}</div>`;
+  listContainer.innerHTML = `<div class="list-item muted">${text}</div>`;
 }
 
 function renderOpportunities(opportunities) {
   if (!listContainer) return;
 
   if (opportunities.length === 0) {
-    renderEmpty("Filtrə uyğun nəticə yoxdur.");
+    renderEmpty("Filtre uygun netice yoxdur.");
     return;
   }
 
   listContainer.innerHTML = "";
   opportunities.forEach((item) => {
     const card = document.createElement("article");
-    card.className = "opportunity-card";
-
-    const header = document.createElement("div");
-    header.className = "card-head";
-    header.innerHTML = `
-      <span class="pill">${item.category_label}</span>
-      <span class="deadline">Son tarix: ${formatDate(item.deadline_date)}</span>
+    card.className = "list-item";
+    card.innerHTML = `
+      <div class="actions" style="justify-content:space-between">
+        <span class="badge">${escapeHtml(item.category_label)}</span>
+        <span class="meta">Son tarix: ${formatDate(item.deadline_date)}</span>
+      </div>
+      <h3>${escapeHtml(item.title)}</h3>
+      <p>${escapeHtml(item.description)}</p>
+      <div class="meta">${escapeHtml(item.organization)} | ${escapeHtml(item.location)} | ${escapeHtml(item.mode)}</div>
+      <div class="actions" style="margin-top:0.5rem">
+        <a class="btn btn-outline" target="_blank" rel="noopener noreferrer" href="${
+          item.external_url || "#"
+        }">Detallar</a>
+      </div>
     `;
-
-    const title = document.createElement("h3");
-    title.textContent = item.title;
-
-    const description = document.createElement("p");
-    description.textContent = item.description;
-
-    const meta = document.createElement("div");
-    meta.className = "card-footer";
-    meta.innerHTML = `
-      <span>${item.organization}</span>
-      <span>${item.location}</span>
-      <span>${item.mode}</span>
-      <span>${item.duration || "-"}</span>
-    `;
-
-    const action = document.createElement("a");
-    action.className = "btn btn-primary";
-    action.href = item.external_url || "#";
-    action.target = "_blank";
-    action.rel = "noopener noreferrer";
-    action.style.marginTop = "0.7rem";
-    action.textContent = "Detallara bax";
-
-    card.appendChild(header);
-    card.appendChild(title);
-    card.appendChild(description);
-    card.appendChild(meta);
-    card.appendChild(action);
     listContainer.appendChild(card);
   });
 }
@@ -208,5 +183,14 @@ function formatDate(value) {
   if (!value) return "-";
   const date = new Date(value);
   if (Number.isNaN(date.getTime())) return value;
-  return new Intl.DateTimeFormat("az-AZ", { day: "numeric", month: "long" }).format(date);
+  return new Intl.DateTimeFormat("az-AZ", { day: "2-digit", month: "2-digit" }).format(date);
+}
+
+function escapeHtml(text) {
+  return String(text || "")
+    .replaceAll("&", "&amp;")
+    .replaceAll("<", "&lt;")
+    .replaceAll(">", "&gt;")
+    .replaceAll('"', "&quot;")
+    .replaceAll("'", "&#039;");
 }

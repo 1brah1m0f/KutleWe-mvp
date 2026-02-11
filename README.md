@@ -1,56 +1,77 @@
 # KutleWe MVP
 
-KutleWe gənclər üçün fürsət bazası + forum platformasının MVP versiyasıdır.
+KutleWe genceler ucun sade interface-li platformadir:
 
-## Texnologiyalar
+- Furset bazasi (filter + AI filter)
+- Forum (thread + cavab)
+- LinkedIn tipli profil sehifesi
+- OTP login (email kod)
+- Elan paylasimi
+- Umumi chat ve qrup chat
+- Admin panel (elan tesdiqi)
 
-- Backend: Node.js, Express
-- DB: SQLite
-- Frontend: Multi-page HTML/CSS/JS
-- AI: Chatbot və AI filter (OpenAI API varsa), fallback qayda-məntiqi
+## Tech stack
 
-## Səhifələr
+- Backend: Node.js + Express
+- DB: SQLite (avtomatik yaradilir)
+- Frontend: HTML/CSS/JS (multi-page)
+- AI: OpenAI API (opsional), fallback qayda mexanizmi
 
-- `/index.html` - Ana səhifə
-- `/opportunities.html` - Fürsətlər + düzgün filtr + AI filtr
-- `/forum.html` - Thread siyahısı + yeni thread formu
-- `/thread.html?id=...` - Hər başlıq üçün ayrıca səhifə + cavab formu
-- `/about.html` - Platforma haqqında
-
-## Quraşdırma
+## Isletme
 
 ```bash
 npm install
-```
-
-İstəyə görə `.env` faylı yaradın:
-
-```env
-PORT=3000
-OPENAI_API_KEY=
-OPENAI_MODEL=gpt-4.1-mini
-```
-
-## İşə salma
-
-```bash
 npm start
 ```
 
-Server qalxanda:
+Server:
 
 ```text
 http://localhost:3000
 ```
 
-DB avtomatik yaradılır: `data/kutlewe.db`
+## DB avtomatik
 
-## DB strukturu
+Server acilanda `data/kutlewe.db` avtomatik yaranir.
+Seed data ve default umumi chat qrupu avtomatik dusur.
 
-Əsas cədvəllər:
+## OTP login (Gmail)
 
-- `opportunities`
-- `threads`
-- `thread_replies`
+`.env` fayli yaradin:
 
-Seed data avtomatik əlavə olunur.
+```env
+PORT=3000
+OPENAI_API_KEY=
+OPENAI_MODEL=gpt-4.1-mini
+
+SMTP_HOST=smtp.gmail.com
+SMTP_PORT=587
+SMTP_SECURE=false
+SMTP_USER=your_gmail@gmail.com
+SMTP_PASS=your_gmail_app_password
+SMTP_FROM=KutleWe <your_gmail@gmail.com>
+
+ADMIN_EMAIL=admin@kutlewe.az
+ADMIN_ACCESS_CODE=KutleWeAdmin2026
+SESSION_TTL_DAYS=7
+```
+
+Qeyd:
+- Gmail ucun `SMTP_PASS` adina App Password istifade edin.
+- SMTP verilmese kod test rejiminde API cavabinda `debugCode` kimi qayidir.
+
+## Sehifeler
+
+- `/index.html` - Ana sehife
+- `/login.html` - OTP login
+- `/profile.html` - Profil (LinkedIn tipli)
+- `/opportunities.html` - Fursetler
+- `/forum.html` - Forum
+- `/thread.html?id=...` - Thread detail + cavab formu
+- `/community.html` - Elan + umumi chat + qruplar
+- `/admin.html` - Admin panel
+
+## Admin demo girisi
+
+- Email: `admin@kutlewe.az`
+- Kod: `KutleWeAdmin2026`

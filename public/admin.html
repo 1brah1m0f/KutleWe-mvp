@@ -1,0 +1,68 @@
+<!doctype html>
+<html lang="az">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>KutleWe | Admin</title>
+    <link rel="stylesheet" href="/assets/css/app.css" />
+    <script defer src="/assets/js/main.js"></script>
+    <script defer src="/assets/js/admin.js"></script>
+  </head>
+  <body>
+    <main class="site-shell">
+      <header class="topbar">
+        <a class="brand" href="/index.html">
+          <span class="brand-mark">K</span>
+          <span class="brand-copy">
+            <strong>KutleWe</strong>
+            <small>Admin panel</small>
+          </span>
+        </a>
+        <nav class="menu">
+          <a data-nav href="/index.html">Ana</a>
+          <a data-nav href="/community.html">Community</a>
+          <a data-nav href="/admin.html">Admin</a>
+          <button data-auth="user" hidden data-action="logout" class="btn btn-danger" type="button">
+            Cixis
+          </button>
+        </nav>
+      </header>
+
+      <section class="grid grid-2">
+        <article class="card">
+          <h1 class="page-title">Admin girisi</h1>
+          <p class="muted">
+            Demo ucun admin melumatlari:
+            <strong>admin@kutlewe.az</strong> / <strong>KutleWeAdmin2026</strong>
+          </p>
+          <form id="admin-login-form" class="grid">
+            <div class="field">
+              <label for="admin-email">Email</label>
+              <input id="admin-email" type="email" value="admin@kutlewe.az" required />
+            </div>
+            <div class="field">
+              <label for="admin-code">Admin kodu</label>
+              <input id="admin-code" value="KutleWeAdmin2026" required />
+            </div>
+            <div class="actions">
+              <button class="btn btn-primary" type="submit">Admin daxil ol</button>
+            </div>
+          </form>
+          <p id="admin-status" class="status"></p>
+        </article>
+
+        <article class="card">
+          <h2 class="page-title" style="font-size: 1.2rem">Admin hesab</h2>
+          <p class="muted">Cari status: <span id="admin-account-status">Yoxlanilir...</span></p>
+        </article>
+      </section>
+
+      <section class="card" style="margin-top: 0.8rem">
+        <h2 class="page-title" style="font-size: 1.2rem">Elan tesdiqi</h2>
+        <div id="admin-announcements" class="list"></div>
+      </section>
+
+      <footer class="footer">© 2026 KutleWe</footer>
+    </main>
+  </body>
+</html>

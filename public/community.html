@@ -1,0 +1,102 @@
+<!doctype html>
+<html lang="az">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>KutleWe | Community</title>
+    <link rel="stylesheet" href="/assets/css/app.css" />
+    <script defer src="/assets/js/main.js"></script>
+    <script defer src="/assets/js/community.js"></script>
+  </head>
+  <body>
+    <main class="site-shell">
+      <header class="topbar">
+        <a class="brand" href="/index.html">
+          <span class="brand-mark">K</span>
+          <span class="brand-copy">
+            <strong>KutleWe</strong>
+            <small>Elan + Chat + Qrup</small>
+          </span>
+        </a>
+        <nav class="menu">
+          <a data-nav href="/index.html">Ana</a>
+          <a data-nav href="/opportunities.html">Fursetler</a>
+          <a data-nav href="/forum.html">Forum</a>
+          <a data-nav href="/community.html">Community</a>
+          <a data-nav href="/profile.html">Profil</a>
+          <a data-auth="guest" class="btn btn-outline" href="/login.html">Login</a>
+          <button data-auth="user" hidden data-action="logout" class="btn btn-danger" type="button">
+            Cixis
+          </button>
+        </nav>
+      </header>
+
+      <section class="grid grid-2">
+        <article class="card">
+          <h1 class="page-title">Elan paylasimi</h1>
+          <p class="muted">
+            Elan paylasmaq ucun login lazimdir. Admin oldugunuz halda elan birbasa tesdiqlenir.
+          </p>
+          <form id="announcement-form" class="grid">
+            <div class="field">
+              <label for="announcement-title">Basliq</label>
+              <input id="announcement-title" name="title" required />
+            </div>
+            <div class="field">
+              <label for="announcement-body">Metn</label>
+              <textarea id="announcement-body" name="body" required></textarea>
+            </div>
+            <div class="actions">
+              <button class="btn btn-primary" type="submit">Elan paylas</button>
+            </div>
+            <p id="announcement-status" class="status"></p>
+          </form>
+        </article>
+
+        <article class="card">
+          <h2 class="page-title" style="font-size: 1.15rem">Butun elanlar</h2>
+          <div id="announcement-list" class="list"></div>
+        </article>
+      </section>
+
+      <section class="card" style="margin-top: 0.8rem">
+        <h2 class="page-title">Umumi chat ve qruplar</h2>
+        <div class="chat-wrap">
+          <aside class="group-list">
+            <div class="list" id="group-list"></div>
+            <form id="group-form" class="card" style="margin-top: 0.8rem; padding: 0.7rem">
+              <h3 style="margin-top: 0">Yeni qrup yarat</h3>
+              <div class="field">
+                <label for="group-name">Qrup adi</label>
+                <input id="group-name" name="name" required />
+              </div>
+              <div class="field">
+                <label for="group-description">Tesvir</label>
+                <textarea id="group-description" name="description"></textarea>
+              </div>
+              <div class="actions">
+                <button class="btn btn-outline" type="submit">Qrup yarat</button>
+              </div>
+              <p id="group-status" class="status"></p>
+            </form>
+          </aside>
+
+          <section>
+            <div class="card" style="padding: 0.7rem">
+              <strong id="active-group-name">Qrup secin</strong>
+              <p id="active-group-description" class="meta"></p>
+            </div>
+            <div id="message-list" class="message-list" style="margin-top: 0.6rem"></div>
+            <form id="message-form" class="actions" style="margin-top: 0.6rem">
+              <input id="message-input" style="flex: 1" placeholder="Mesaj..." />
+              <button class="btn btn-primary" type="submit">Gonder</button>
+            </form>
+            <p id="message-status" class="status"></p>
+          </section>
+        </div>
+      </section>
+
+      <footer class="footer">© 2026 KutleWe</footer>
+    </main>
+  </body>
+</html>

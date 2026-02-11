@@ -1,0 +1,76 @@
+<!doctype html>
+<html lang="az">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>KutleWe | Login</title>
+    <link rel="stylesheet" href="/assets/css/app.css" />
+    <script defer src="/assets/js/main.js"></script>
+    <script defer src="/assets/js/login.js"></script>
+  </head>
+  <body>
+    <main class="site-shell">
+      <header class="topbar">
+        <a class="brand" href="/index.html">
+          <span class="brand-mark">K</span>
+          <span class="brand-copy">
+            <strong>KutleWe</strong>
+            <small>OTP Login</small>
+          </span>
+        </a>
+        <nav class="menu">
+          <a data-nav href="/index.html">Ana</a>
+          <a data-nav href="/community.html">Community</a>
+          <a data-nav href="/admin.html">Admin</a>
+        </nav>
+      </header>
+
+      <section class="grid grid-2">
+        <article class="card">
+          <h1 class="page-title">Giris kodu al</h1>
+          <p class="muted">Email daxil edin. Kod Gmail-e gonderilir.</p>
+          <form id="request-code-form" class="grid">
+            <div class="field">
+              <label for="request-name">Adiniz</label>
+              <input id="request-name" name="name" placeholder="Mesele: Aysel Memmedova" />
+            </div>
+            <div class="field">
+              <label for="request-email">Email</label>
+              <input id="request-email" name="email" type="email" required placeholder="name@gmail.com" />
+            </div>
+            <div class="actions">
+              <button class="btn btn-primary" type="submit">Kod gonder</button>
+            </div>
+          </form>
+          <p id="request-status" class="status"></p>
+        </article>
+
+        <article class="card">
+          <h2 class="page-title">Kodu tesdiq et</h2>
+          <p class="muted">Kod daxil edib profile daxil olun.</p>
+          <form id="verify-code-form" class="grid">
+            <div class="field">
+              <label for="verify-name">Adiniz (opsional)</label>
+              <input id="verify-name" name="name" placeholder="Ad profile qeyd olunur" />
+            </div>
+            <div class="field">
+              <label for="verify-email">Email</label>
+              <input id="verify-email" name="email" type="email" required placeholder="name@gmail.com" />
+            </div>
+            <div class="field">
+              <label for="verify-code">6 reqemli kod</label>
+              <input id="verify-code" name="code" required maxlength="6" placeholder="123456" />
+            </div>
+            <div class="actions">
+              <button class="btn btn-primary" type="submit">Daxil ol</button>
+              <button class="btn btn-outline" type="button" id="reset-code-btn">Kodu sifirla</button>
+            </div>
+          </form>
+          <p id="verify-status" class="status"></p>
+        </article>
+      </section>
+
+      <footer class="footer">© 2026 KutleWe</footer>
+    </main>
+  </body>
+</html>

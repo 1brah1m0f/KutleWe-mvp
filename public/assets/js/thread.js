@@ -11,32 +11,26 @@ initializeThreadPage();
 
 function initializeThreadPage() {
   if (!threadId) {
-    setThreadError("Thread ID tapılmadı.");
-    if (replyForm) {
-      replyForm.style.display = "none";
-    }
+    setThreadError("Thread ID tapilmadi.");
+    replyForm && (replyForm.style.display = "none");
     return;
   }
 
   loadThread();
-
-  if (replyForm) {
-    replyForm.addEventListener("submit", async (event) => {
-      event.preventDefault();
-      await submitReply();
-    });
-  }
+  replyForm?.addEventListener("submit", async (event) => {
+    event.preventDefault();
+    await submitReply();
+  });
 }
 
 async function loadThread() {
   try {
     const response = await fetch(`/api/forum/threads/${threadId}`);
+    const data = await response.json();
     if (!response.ok) {
-      const data = await response.json().catch(() => ({}));
-      throw new Error(data?.message || "Thread yüklənmədi.");
+      throw new Error(data?.message || "Thread yuklenmedi.");
     }
 
-    const data = await response.json();
     renderThread(data.thread);
     renderReplies(data.replies || []);
   } catch (error) {
@@ -46,42 +40,31 @@ async function loadThread() {
 
 function renderThread(thread) {
   if (!thread) {
-    setThreadError("Thread məlumatı boşdur.");
+    setThreadError("Thread melumati yoxdur.");
     return;
   }
-
   if (threadTitle) threadTitle.textContent = thread.title;
   if (threadBody) threadBody.textContent = thread.body;
   if (threadMeta) {
-    threadMeta.textContent = `${thread.author} | ${
-      thread.tag || "Tag yoxdur"
-    } | ${formatDateTime(thread.created_at)}`;
+    threadMeta.textContent = `${thread.author} | ${thread.tag || "Tag yoxdur"} | ${formatDate(thread.created_at)}`;
   }
 }
 
 function renderReplies(replies) {
   if (!replyList) return;
-
+  replyList.innerHTML = "";
   if (replies.length === 0) {
-    replyList.innerHTML = `<div class="empty-box">Hələ cavab yoxdur. İlk cavabı siz yazın.</div>`;
+    replyList.innerHTML = `<div class="list-item muted">Hele cavab yoxdur.</div>`;
     return;
   }
 
-  replyList.innerHTML = "";
-
   replies.forEach((reply) => {
     const card = document.createElement("article");
-    card.className = "reply-card";
-
-    const meta = document.createElement("div");
-    meta.className = "thread-meta";
-    meta.textContent = `${reply.author} | ${formatDateTime(reply.created_at)}`;
-
-    const body = document.createElement("p");
-    body.textContent = reply.body;
-
-    card.appendChild(meta);
-    card.appendChild(body);
+    card.className = "list-item";
+    card.innerHTML = `
+      <div class="meta">${escapeHtml(reply.author)} | ${formatDate(reply.created_at)}</div>
+      <p>${escapeHtml(reply.body)}</p>
+    `;
     replyList.appendChild(card);
   });
 }
@@ -95,36 +78,30 @@ async function submitReply() {
     body: String(formData.get("body") || "").trim()
   };
 
-  replyStatus.textContent = "Göndərilir...";
-  replyStatus.className = "status-message";
-
+  setStatus("Gonderilir...", "warn");
   try {
     const response = await fetch(`/api/forum/threads/${threadId}/replies`, {
       method: "POST",
-      headers: { "Content-Type": "application/json" },
+      headers: window.KutleWeAuth ? window.KutleWeAuth.getAuthHeaders() : { "Content-Type": "application/json" },
       body: JSON.stringify(payload)
     });
-
     const data = await response.json();
     if (!response.ok) {
-      throw new Error(data?.message || "Cavab göndərilə bilmədi.");
+      throw new Error(data?.message || "Cavab gonderilemedi.");
     }
-
-    replyStatus.textContent = "Cavab əlavə olundu.";
-    replyStatus.className = "status-message success";
     replyForm.reset();
+    setStatus("Cavab elave olundu.", "ok");
     await loadThread();
   } catch (error) {
-    replyStatus.textContent = error.message;
-    replyStatus.className = "status-message error";
+    setStatus(error.message, "error");
   }
 }
 
 function setThreadError(message) {
-  if (threadTitle) threadTitle.textContent = "Xəta";
+  if (threadTitle) threadTitle.textContent = "Xeta";
   if (threadBody) threadBody.textContent = message;
   if (threadMeta) threadMeta.textContent = "";
-  if (replyList) replyList.innerHTML = `<div class="empty-box">${message}</div>`;
+  if (replyList) replyList.innerHTML = `<div class="list-item muted">${message}</div>`;
 }
 
 function getThreadIdFromQuery() {
@@ -136,14 +113,29 @@ function getThreadIdFromQuery() {
   return id;
 }
 
-function formatDateTime(value) {
+function setStatus(text, tone) {
+  if (!replyStatus) return;
+  replyStatus.textContent = text;
+  replyStatus.className = `status ${tone}`;
+}
+
+function formatDate(value) {
   if (!value) return "-";
   const date = new Date(value);
   if (Number.isNaN(date.getTime())) return value;
   return new Intl.DateTimeFormat("az-AZ", {
     day: "2-digit",
-    month: "long",
+    month: "2-digit",
     hour: "2-digit",
     minute: "2-digit"
   }).format(date);
+}
+
+function escapeHtml(text) {
+  return String(text || "")
+    .replaceAll("&", "&amp;")
+    .replaceAll("<", "&lt;")
+    .replaceAll(">", "&gt;")
+    .replaceAll('"', "&quot;")
+    .replaceAll("'", "&#039;");
 }

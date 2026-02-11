@@ -1,13 +1,55 @@
-(function initKutleWeBase() {
-  highlightActiveMenu();
-  mountChatbot();
-})();
+const STORAGE_KEY = "kutlewe_token";
 
-function highlightActiveMenu() {
+const authState = {
+  user: null,
+  token: localStorage.getItem(STORAGE_KEY) || ""
+};
+
+window.KutleWeAuth = {
+  clearToken,
+  getAuthHeaders,
+  getCurrentUser: () => authState.user,
+  getToken: () => authState.token,
+  logout,
+  refreshUser,
+  setToken
+};
+
+bootstrap();
+
+async function bootstrap() {
+  markActiveMenu();
+  await refreshUser();
+  renderAuthState();
+  bindAuthActions();
+}
+
+function setToken(token) {
+  authState.token = String(token || "").trim();
+  if (authState.token) {
+    localStorage.setItem(STORAGE_KEY, authState.token);
+  } else {
+    localStorage.removeItem(STORAGE_KEY);
+  }
+}
+
+function clearToken() {
+  setToken("");
+  authState.user = null;
+}
+
+function getAuthHeaders() {
+  const headers = { "Content-Type": "application/json" };
+  if (authState.token) {
+    headers.Authorization = `Bearer ${authState.token}`;
+  }
+  return headers;
+}
+
+function markActiveMenu() {
   const normalizedPath =
     window.location.pathname === "/" ? "/index.html" : window.location.pathname;
   const links = document.querySelectorAll("a[data-nav]");
-
   links.forEach((link) => {
     const href = link.getAttribute("href");
     if (href === normalizedPath) {
@@ -16,100 +58,74 @@ function highlightActiveMenu() {
   });
 }
 
-function mountChatbot() {
-  const root = document.getElementById("chatbot-root");
-  if (!root) {
-    return;
+function renderAuthState() {
+  const guestElements = document.querySelectorAll('[data-auth="guest"]');
+  const userElements = document.querySelectorAll('[data-auth="user"]');
+  const userNameElements = document.querySelectorAll("[data-user-name]");
+  const isLoggedIn = Boolean(authState.user);
+
+  guestElements.forEach((element) => {
+    element.hidden = isLoggedIn;
+  });
+  userElements.forEach((element) => {
+    element.hidden = !isLoggedIn;
+  });
+  userNameElements.forEach((element) => {
+    element.textContent = isLoggedIn ? authState.user.name || authState.user.email : "";
+  });
+}
+
+async function refreshUser() {
+  if (!authState.token) {
+    authState.user = null;
+    renderAuthState();
+    return null;
   }
 
-  root.innerHTML = `
-    <section class="chatbot" aria-label="AI çat bot">
-      <div class="chatbot-panel" id="chatbot-panel">
-        <header class="chat-header">
-          <strong>KutleWe AI köməkçi</strong>
-          <button class="chat-close" type="button" id="chat-close" aria-label="Bağla">✕</button>
-        </header>
-        <div class="chat-messages" id="chat-messages"></div>
-        <form class="chat-form" id="chat-form">
-          <input id="chat-input" placeholder="Sualınızı yazın..." />
-          <button type="submit">Göndər</button>
-        </form>
-      </div>
-      <button class="chatbot-toggle" type="button" id="chat-toggle" aria-label="Çatı aç">AI</button>
-    </section>
-  `;
+  try {
+    const response = await fetch("/api/auth/me", {
+      headers: getAuthHeaders()
+    });
 
-  const panel = document.getElementById("chatbot-panel");
-  const toggleButton = document.getElementById("chat-toggle");
-  const closeButton = document.getElementById("chat-close");
-  const form = document.getElementById("chat-form");
-  const input = document.getElementById("chat-input");
-  const messageBox = document.getElementById("chat-messages");
-
-  if (!panel || !toggleButton || !closeButton || !form || !input || !messageBox) {
-    return;
-  }
-
-  const addMessage = (type, text) => {
-    const message = document.createElement("div");
-    message.className = `chat-msg ${type}`;
-    message.textContent = text;
-    messageBox.appendChild(message);
-    messageBox.scrollTop = messageBox.scrollHeight;
-  };
-
-  addMessage(
-    "bot",
-    "Salam. Mən KutleWe AI köməkçisiyəm. Fürsət, filtr və forum suallarınız üçün yazın."
-  );
-
-  toggleButton.addEventListener("click", () => {
-    panel.classList.toggle("open");
-  });
-
-  closeButton.addEventListener("click", () => {
-    panel.classList.remove("open");
-  });
-
-  form.addEventListener("submit", async (event) => {
-    event.preventDefault();
-    const value = String(input.value || "").trim();
-    if (!value) {
-      return;
+    if (!response.ok) {
+      clearToken();
+      renderAuthState();
+      return null;
     }
 
-    addMessage("user", value);
-    input.value = "";
+    const payload = await response.json();
+    authState.user = payload.user || null;
+    renderAuthState();
+    return authState.user;
+  } catch (_error) {
+    return null;
+  }
+}
 
-    const loadingMessage = document.createElement("div");
-    loadingMessage.className = "chat-msg bot";
-    loadingMessage.textContent = "Yazılır...";
-    messageBox.appendChild(loadingMessage);
-    messageBox.scrollTop = messageBox.scrollHeight;
-
-    try {
-      const response = await fetch("/api/chat", {
+async function logout() {
+  try {
+    if (authState.token) {
+      await fetch("/api/auth/logout", {
         method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({
-          message: value,
-          page: window.location.pathname
-        })
+        headers: getAuthHeaders()
       });
-
-      let replyText = "Xəta baş verdi. Bir azdan yenidən yoxlayın.";
-      if (response.ok) {
-        const data = await response.json();
-        if (data?.reply) {
-          replyText = data.reply;
-        }
-      }
-
-      loadingMessage.remove();
-      addMessage("bot", replyText);
-    } catch (_error) {
-      loadingMessage.remove();
-      addMessage("bot", "Serverlə əlaqə qurulmadı.");
     }
+  } catch (_error) {
+    // ignore logout errors
+  } finally {
+    clearToken();
+    renderAuthState();
+  }
+}
+
+function bindAuthActions() {
+  const logoutButtons = document.querySelectorAll("[data-action='logout']");
+  logoutButtons.forEach((button) => {
+    button.addEventListener("click", async () => {
+      await logout();
+      if (window.location.pathname !== "/index.html" && window.location.pathname !== "/") {
+        window.location.href = "/index.html";
+      }
+    });
   });
 }

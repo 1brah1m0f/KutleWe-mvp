@@ -3,13 +3,7 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>KutleWe | Ana səhifə</title>
-    <link rel="preconnect" href="https://fonts.googleapis.com" />
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-    <link
-      href="https://fonts.googleapis.com/css2?family=Sora:wght@400;500;600;700;800&family=Space+Grotesk:wght@500;700&display=swap"
-      rel="stylesheet"
-    />
+    <title>KutleWe | Ana sehife</title>
     <link rel="stylesheet" href="/assets/css/app.css" />
     <script defer src="/assets/js/main.js"></script>
     <script defer src="/assets/js/home.js"></script>
@@ -21,99 +15,60 @@
           <span class="brand-mark">K</span>
           <span class="brand-copy">
             <strong>KutleWe</strong>
-            <small>Fürsətlər + Community</small>
+            <small>Furset + Forum + Chat</small>
           </span>
         </a>
 
-        <nav class="menu" aria-label="Əsas menyu">
+        <nav class="menu" aria-label="Esas menyu">
           <a data-nav href="/index.html">Ana</a>
-          <a data-nav href="/opportunities.html">Fürsətlər</a>
+          <a data-nav href="/opportunities.html">Fursetler</a>
           <a data-nav href="/forum.html">Forum</a>
-          <a data-nav href="/about.html">Haqqımızda</a>
-          <a class="btn btn-outline" href="/forum.html">Profil yarat</a>
+          <a data-nav href="/community.html">Community</a>
+          <a data-nav href="/about.html">Haqqimizda</a>
+          <a data-auth="guest" class="btn btn-outline" href="/login.html">Login</a>
+          <a data-auth="user" hidden data-nav href="/profile.html">Profil</a>
+          <button data-auth="user" hidden data-action="logout" class="btn btn-danger" type="button">
+            Cixis
+          </button>
         </nav>
       </header>
 
-      <section class="hero-grid">
-        <div class="hero-left">
-          <span class="hero-pill">Vahid platforma, sıfır vaxt itkisi</span>
-          <h1 class="hero-title">
-            Gənclərin ehtiyac duyduğu bütün
-            <span>imkanları bir məkanda</span>
-            birləşdiririk.
-          </h1>
-          <p class="hero-lead">
-            KutleWe tələbələrə təcrübə proqramları, könüllülük layihələri, hakatonlar və
-            karyera tədbirlərini ayrıca saytlarda axtarmadan tapmağa imkan verir.
-            Paralel olaraq forumda sual-cavab və bilik mübadiləsi ilə aktiv icma qurur.
+      <section class="hero">
+        <article class="card">
+          <h1>KutleWe genceler ucun vahid platformadir.</h1>
+          <p class="muted">
+            Fursetler, forum, elanlar, umumi chat ve qrup chat bir platformada birlesir.
+            Interface sade saxlanilib ki, rahat istifade olunsun.
           </p>
-          <div class="hero-actions">
-            <a class="btn btn-primary" href="/opportunities.html">Fürsətləri kəşf et</a>
-            <a class="btn btn-outline" href="/forum.html">Forumda müzakirə et</a>
+          <div class="actions">
+            <a class="btn btn-primary" href="/opportunities.html">Fursetlere bax</a>
+            <a class="btn btn-outline" href="/community.html">Community chat</a>
+            <a class="btn btn-outline" href="/profile.html">LinkedIn tipli profil</a>
           </div>
-        </div>
+        </article>
 
-        <aside class="surface hero-side">
-          <h2>Bu həftə platformada</h2>
-          <ul class="clean-list">
-            <li><strong id="count-opportunities">0</strong> aktiv fürsət</li>
-            <li><strong id="count-threads">0</strong> forum mövzusu</li>
-            <li><strong id="count-replies">0</strong> cavab yazısı</li>
-          </ul>
-          <p class="surface-note">
-            KutleWe AI dəstəyi ilə sizə uyğun imkanları daha sürətli tapmağa və düzgün
-            müzakirə mövzularına yönləndirməyə kömək edir.
-          </p>
+        <aside class="card">
+          <h2 class="page-title" style="font-size: 1.2rem">Platforma statistikasi</h2>
+          <div class="list">
+            <div class="list-item"><strong id="count-users">0</strong> istifadeci</div>
+            <div class="list-item"><strong id="count-opportunities">0</strong> furset</div>
+            <div class="list-item"><strong id="count-threads">0</strong> forum movzusu</div>
+            <div class="list-item"><strong id="count-announcements">0</strong> aktiv elan</div>
+          </div>
         </aside>
       </section>
 
-      <section class="section">
-        <h2>İki əsas funksionallıq</h2>
-        <div class="card-grid">
-          <article class="feature-card">
-            <h3>Mərkəzləşdirilmiş Fürsətlər Bazası</h3>
-            <p>
-              Fərqli platformalarda vaxt itirmədən təcrübə, könüllülük, hakaton və digər
-              karyera elanlarını filtrləyərək tək səhifədə əldə edin.
-            </p>
-            <a class="mini-link" href="/opportunities.html">Fürsətlər səhifəsinə keç</a>
-          </article>
-
-          <article class="feature-card">
-            <h3>İnteraktiv Müzakirə və Dəstək Paneli</h3>
-            <p>
-              Mövzu açın, suallara cavab verin və thread-lər üzərindən tələbələr arasında
-              real bilik paylaşımı yaradın.
-            </p>
-            <a class="mini-link" href="/forum.html">Forum səhifəsinə keç</a>
-          </article>
-        </div>
+      <section class="card" style="margin-top: 0.8rem">
+        <h2 class="page-title" style="font-size: 1.2rem">Son elanlar</h2>
+        <div id="home-announcements" class="list"></div>
       </section>
 
-      <section class="section">
-        <h2>Son yenilənmələr</h2>
-        <div class="split-grid">
-          <article class="surface">
-            <h3>Yaxın son tarixli fürsətlər</h3>
-            <div class="mini-feed" id="home-opportunities">
-              <p class="result-meta">Yüklənir...</p>
-            </div>
-          </article>
-
-          <article class="surface">
-            <h3>Aktiv forum başlıqları</h3>
-            <div class="mini-feed" id="home-threads">
-              <p class="result-meta">Yüklənir...</p>
-            </div>
-          </article>
-        </div>
+      <section class="card" style="margin-top: 0.8rem">
+        <h2 class="page-title" style="font-size: 1.2rem">Son forum movzulari</h2>
+        <div id="home-threads" class="list"></div>
       </section>
 
-      <footer class="footer">
-        © 2026 KutleWe. Gənclər üçün imkanlar və icma vahid məkanda.
-      </footer>
+      <footer class="footer">© 2026 KutleWe</footer>
     </main>
-
-    <div id="chatbot-root"></div>
   </body>
 </html>

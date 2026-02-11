@@ -1,95 +1,79 @@
-const opportunityFeed = document.getElementById("home-opportunities");
-const threadFeed = document.getElementById("home-threads");
-
+const countUsers = document.getElementById("count-users");
 const countOpportunities = document.getElementById("count-opportunities");
 const countThreads = document.getElementById("count-threads");
-const countReplies = document.getElementById("count-replies");
+const countAnnouncements = document.getElementById("count-announcements");
+const announcementBox = document.getElementById("home-announcements");
+const threadBox = document.getElementById("home-threads");
 
-initializeHome();
+initHome();
 
-async function initializeHome() {
+async function initHome() {
   try {
     const response = await fetch("/api/summary");
     if (!response.ok) {
-      throw new Error("Summary endpoint xətası");
+      throw new Error("Summary xetasi");
     }
     const data = await response.json();
-    renderSummary(data);
+    renderCounts(data.counts || {});
+    renderAnnouncements(data.latestAnnouncements || []);
+    renderThreads(data.latestThreads || []);
   } catch (_error) {
-    renderHomeError();
+    renderError();
   }
 }
 
-function renderSummary(data) {
-  if (countOpportunities) countOpportunities.textContent = String(data?.counts?.opportunities || 0);
-  if (countThreads) countThreads.textContent = String(data?.counts?.threads || 0);
-  if (countReplies) countReplies.textContent = String(data?.counts?.replies || 0);
-
-  renderOpportunityFeed(data?.latestOpportunities || []);
-  renderThreadFeed(data?.latestThreads || []);
+function renderCounts(counts) {
+  if (countUsers) countUsers.textContent = String(counts.users || 0);
+  if (countOpportunities) countOpportunities.textContent = String(counts.opportunities || 0);
+  if (countThreads) countThreads.textContent = String(counts.threads || 0);
+  if (countAnnouncements) countAnnouncements.textContent = String(counts.announcements || 0);
 }
 
-function renderOpportunityFeed(items) {
-  if (!opportunityFeed) return;
-
+function renderAnnouncements(items) {
+  if (!announcementBox) return;
   if (items.length === 0) {
-    opportunityFeed.innerHTML = `<div class="empty-box">Hələ fürsət yoxdur.</div>`;
+    announcementBox.innerHTML = `<div class="list-item muted">Hec bir elan yoxdur.</div>`;
     return;
   }
 
-  opportunityFeed.innerHTML = "";
+  announcementBox.innerHTML = "";
   items.forEach((item) => {
-    const block = document.createElement("article");
-    block.className = "mini-item";
-
-    const title = document.createElement("h4");
-    title.textContent = item.title;
-
-    const info = document.createElement("p");
-    info.textContent = `${item.category_label} | Son tarix: ${formatDate(item.deadline_date)}`;
-
-    block.appendChild(title);
-    block.appendChild(info);
-    opportunityFeed.appendChild(block);
+    const article = document.createElement("article");
+    article.className = "list-item";
+    article.innerHTML = `
+      <h3>${escapeHtml(item.title)}</h3>
+      <p>${escapeHtml(item.body)}</p>
+      <div class="meta">${escapeHtml(item.author_name || "Anonim")} | ${formatDate(item.created_at)}</div>
+    `;
+    announcementBox.appendChild(article);
   });
 }
 
-function renderThreadFeed(items) {
-  if (!threadFeed) return;
-
+function renderThreads(items) {
+  if (!threadBox) return;
   if (items.length === 0) {
-    threadFeed.innerHTML = `<div class="empty-box">Hələ forum mövzusu yoxdur.</div>`;
+    threadBox.innerHTML = `<div class="list-item muted">Hec bir movzu yoxdur.</div>`;
     return;
   }
 
-  threadFeed.innerHTML = "";
+  threadBox.innerHTML = "";
   items.forEach((item) => {
-    const block = document.createElement("article");
-    block.className = "mini-item";
-
-    const title = document.createElement("h4");
-    const anchor = document.createElement("a");
-    anchor.href = `/thread.html?id=${item.id}`;
-    anchor.textContent = item.title;
-    anchor.style.color = "var(--text)";
-    anchor.style.textDecoration = "none";
-    title.appendChild(anchor);
-
-    const info = document.createElement("p");
-    info.textContent = `${item.author} | ${item.reply_count} cavab`;
-
-    block.appendChild(title);
-    block.appendChild(info);
-    threadFeed.appendChild(block);
+    const article = document.createElement("article");
+    article.className = "list-item";
+    article.innerHTML = `
+      <h3><a href="/thread.html?id=${item.id}">${escapeHtml(item.title)}</a></h3>
+      <div class="meta">${escapeHtml(item.author || "Anonim")} | ${item.reply_count || 0} cavab</div>
+    `;
+    threadBox.appendChild(article);
   });
 }
 
-function renderHomeError() {
-  if (opportunityFeed) {
-    opportunityFeed.innerHTML = `<div class="empty-box">Məlumat yüklənmədi.</div>`;
+function renderError() {
+  if (announcementBox) {
+    announcementBox.innerHTML = `<div class="list-item muted">Melumat yuklenmedi.</div>`;
   }
-  if (threadFeed) {
-    threadFeed.innerHTML = `<div class="empty-box">Məlumat yüklənmədi.</div>`;
+  if (threadBox) {
+    threadBox.innerHTML = `<div class="list-item muted">Melumat yuklenmedi.</div>`;
   }
 }
 
@@ -97,5 +81,18 @@ function formatDate(value) {
   if (!value) return "-";
   const date = new Date(value);
   if (Number.isNaN(date.getTime())) return value;
-  return new Intl.DateTimeFormat("az-AZ", { day: "numeric", month: "long" }).format(date);
+  return new Intl.DateTimeFormat("az-AZ", {
+    day: "2-digit",
+    month: "2-digit",
+    year: "numeric"
+  }).format(date);
+}
+
+function escapeHtml(text) {
+  return String(text || "")
+    .replaceAll("&", "&amp;")
+    .replaceAll("<", "&lt;")
+    .replaceAll(">", "&gt;")
+    .replaceAll('"', "&quot;")
+    .replaceAll("'", "&#039;");
 }
