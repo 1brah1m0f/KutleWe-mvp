@@ -155,6 +155,22 @@ app.use((req, res) => {
   });
 });
 
-app.listen(port, () => {
+const server = app.listen(port, () => {
   console.log(`Server isleyir: http://localhost:${port}`);
 });
+
+async function shutdown() {
+  try {
+    server.close();
+    if (pool) {
+      await pool.end();
+    }
+  } catch (_error) {
+    // ignore shutdown errors
+  } finally {
+    process.exit(0);
+  }
+}
+
+process.on("SIGINT", shutdown);
+process.on("SIGTERM", shutdown);
