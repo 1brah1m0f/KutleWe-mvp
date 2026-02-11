@@ -4,8 +4,8 @@
   "description": "KutleWe minimal backend (Express + Supabase Postgres)",
   "main": "server.js",
   "scripts": {
-    "start": "node src/server.js",
-    "dev": "node --watch src/server.js"
+    "start": "node server.js",
+    "dev": "node --watch server.js"
   },
   "keywords": [
     "kutlewe",
@@ -20,8 +20,6 @@
     "express": "^4.21.2",
     "nodemailer": "^6.10.1",
     "openai": "^4.83.0",
-    "pg": "^8.13.1",
-    "sqlite": "^5.1.1",
-    "sqlite3": "^5.1.7"
+    "pg": "^8.13.1"
   }
 }
