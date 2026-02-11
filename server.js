@@ -155,22 +155,35 @@ app.use((req, res) => {
   });
 });
 
-const server = app.listen(port, () => {
-  console.log(`Server isleyir: http://localhost:${port}`);
-});
+function startServer() {
+  const server = app.listen(port, () => {
+    console.log(`Server isleyir: http://localhost:${port}`);
+  });
 
-async function shutdown() {
-  try {
-    server.close();
-    if (pool) {
-      await pool.end();
+  async function shutdown() {
+    try {
+      server.close();
+      if (pool) {
+        await pool.end();
+      }
+    } catch (_error) {
+      // ignore shutdown errors
+    } finally {
+      process.exit(0);
     }
-  } catch (_error) {
-    // ignore shutdown errors
-  } finally {
-    process.exit(0);
   }
+
+  process.on("SIGINT", shutdown);
+  process.on("SIGTERM", shutdown);
+
+  return server;
 }
 
-process.on("SIGINT", shutdown);
-process.on("SIGTERM", shutdown);
+if (require.main === module) {
+  startServer();
+}
+
+module.exports = {
+  app,
+  startServer
+};
