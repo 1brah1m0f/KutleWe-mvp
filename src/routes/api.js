@@ -271,46 +271,6 @@ router.post("/auth/logout", async (req, res, next) => {
   }
 });
 
-router.get("/profile/:id", async (req, res, next) => {
-  try {
-    const id = parseId(req.params.id);
-    if (!id) {
-      return res.status(400).json({ message: "User id duzgun deyil." });
-    }
-    const db = getDatabase();
-    const user = await db.get(
-      `
-        SELECT id, name, headline, about, location, skills, linkedin_url, avatar_url, created_at
-        FROM users
-        WHERE id = ?
-      `,
-      [id]
-    );
-    if (!user) {
-      return res.status(404).json({ message: "Istifadeci tapilmadi." });
-    }
-
-    const stats = await db.get(
-      `
-        SELECT
-          (SELECT COUNT(*) FROM announcements WHERE author_user_id = ?) as announcements,
-          (SELECT COUNT(*) FROM threads WHERE author = ?) as threads
-      `,
-      [id, user.name]
-    );
-
-    res.json({
-      user: {
-        ...user,
-        skills: user.skills ? user.skills.split(",").map((s) => s.trim()).filter(Boolean) : []
-      },
-      stats
-    });
-  } catch (error) {
-    next(error);
-  }
-});
-
 router.get("/profile/me", async (req, res, next) => {
   try {
     const user = await requireUser(req, res);
@@ -365,6 +325,46 @@ router.put("/profile/me", async (req, res, next) => {
 
     const updated = await db.get("SELECT * FROM users WHERE id = ?", [user.id]);
     res.json({ user: toPublicUser(updated) });
+  } catch (error) {
+    next(error);
+  }
+});
+
+router.get("/profile/:id", async (req, res, next) => {
+  try {
+    const id = parseId(req.params.id);
+    if (!id) {
+      return res.status(400).json({ message: "User id duzgun deyil." });
+    }
+    const db = getDatabase();
+    const user = await db.get(
+      `
+        SELECT id, name, headline, about, location, skills, linkedin_url, avatar_url, created_at
+        FROM users
+        WHERE id = ?
+      `,
+      [id]
+    );
+    if (!user) {
+      return res.status(404).json({ message: "Istifadeci tapilmadi." });
+    }
+
+    const stats = await db.get(
+      `
+        SELECT
+          (SELECT COUNT(*) FROM announcements WHERE author_user_id = ?) as announcements,
+          (SELECT COUNT(*) FROM threads WHERE author = ?) as threads
+      `,
+      [id, user.name]
+    );
+
+    res.json({
+      user: {
+        ...user,
+        skills: user.skills ? user.skills.split(",").map((s) => s.trim()).filter(Boolean) : []
+      },
+      stats
+    });
   } catch (error) {
     next(error);
   }

@@ -2,10 +2,13 @@
   "name": "kutlewe-mvp",
   "version": "1.0.0",
   "description": "KutleWe minimal backend (Express + Supabase Postgres)",
-  "main": "server.js",
+  "main": "src/server.js",
   "scripts": {
     "start": "node src/server.js",
     "dev": "node --watch src/server.js"
+  },
+  "engines": {
+    "node": ">=18.0.0"
   },
   "keywords": [
     "kutlewe",
