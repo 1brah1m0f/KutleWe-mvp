@@ -50,10 +50,16 @@ app.get("/db-test", async (_req, res) => {
       now: result.rows?.[0]?.now || null
     });
   } catch (error) {
+    let hint = "DATABASE_URL deyerini yoxlayin.";
+    if (String(error.message || "").includes("ENOTFOUND")) {
+      hint =
+        "Host tapilmadi. Supabase Database bolmesinden Pooler URI goturub DATABASE_URL olaraq daxil edin.";
+    }
     res.status(500).json({
       ok: false,
       error: "DB_CONNECTION_FAILED",
-      message: error.message
+      message: error.message,
+      hint
     });
   }
 });
@@ -93,13 +99,18 @@ app.post("/chat", async (req, res) => {
 
     res.json({
       ok: true,
+      source: "openai",
       reply: completion.choices?.[0]?.message?.content || ""
     });
   } catch (error) {
-    res.status(500).json({
-      ok: false,
-      error: "OPENAI_REQUEST_FAILED",
-      message: error.message
+    const fallbackReply =
+      "Hazirda OpenAI servisi cavab vermir. Qisa plan: 1) hədəf rolu seç 2) CV-ni uyğunlaşdır 3) 3 real layihə hazırla 4) hər gün 2 müraciət et.";
+
+    res.json({
+      ok: true,
+      source: "fallback",
+      warning: error.message,
+      reply: fallbackReply
     });
   }
 });

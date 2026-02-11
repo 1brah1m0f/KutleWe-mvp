@@ -90,6 +90,9 @@ async function sendMessage(message) {
     }
 
     addBubble("bot", data.reply || "Cavab alınmadı.");
+    if (data.source === "fallback") {
+      setChatError("OpenAI kvota/xəta səbəbilə fallback cavab göstərildi.");
+    }
   } catch (error) {
     removeTypingBubble();
     setChatError(error.message);
