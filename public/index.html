@@ -3,127 +3,72 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>KutleWe | Smart Community Platform</title>
-    <link rel="preconnect" href="https://fonts.googleapis.com" />
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-    <link
-      href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&family=Syne:wght@600;700;800&display=swap"
-      rel="stylesheet"
-    />
+    <title>KutleWe | Ana sehife</title>
     <link rel="stylesheet" href="/assets/css/app.css" />
     <script defer src="/assets/js/main.js"></script>
+    <script defer src="/assets/js/home.js"></script>
   </head>
   <body>
-    <div class="noise"></div>
-
-    <main class="container">
+    <main class="site-shell">
       <header class="topbar">
-        <a class="brand" href="/">
-          <span class="brand-mark">KW</span>
-          <span>
+        <a class="brand" href="/index.html">
+          <span class="brand-mark">K</span>
+          <span class="brand-copy">
             <strong>KutleWe</strong>
-            <small>Gənclər üçün vahid imkan mərkəzi</small>
+            <small>Furset + Forum + Chat</small>
           </span>
         </a>
 
-        <nav class="menu">
-          <a href="#features">Xüsusiyyətlər</a>
-          <a href="#status">Status</a>
-          <a href="#ai">AI Köməkçi</a>
-          <a href="https://kutle-we-np8d60k3z-sixis-projects-05eeda55.vercel.app" target="_blank" rel="noreferrer">Deploy URL</a>
+        <nav class="menu" aria-label="Esas menyu">
+          <a data-nav href="/index.html">Ana</a>
+          <a data-nav href="/opportunities.html">Fursetler</a>
+          <a data-nav href="/forum.html">Forum</a>
+          <a data-nav href="/community.html">Community</a>
+          <a data-nav href="/about.html">Haqqimizda</a>
+          <a data-auth="guest" class="btn btn-outline" href="/login.html">Login</a>
+          <a data-auth="user" hidden data-nav href="/profile.html">Profil</a>
+          <button data-auth="user" hidden data-action="logout" class="btn btn-danger" type="button">
+            Cixis
+          </button>
         </nav>
       </header>
 
       <section class="hero">
-        <div class="hero-copy">
-          <p class="pill">Mərkəzləşdirilmiş platforma</p>
-          <h1>
-            KutleWe ilə
-            <span>fırsət, forum və AI dəstəyi</span>
-            eyni məkanda.
-          </h1>
-          <p>
-            Platforma gənclərin fürsət axtarışı, müzakirə mühiti və community əlaqəsini
-            sadə, sürətli və vizual olaraq aydın təcrübəyə çevirir.
+        <article class="card">
+          <h1>KutleWe genceler ucun vahid platformadir.</h1>
+          <p class="muted">
+            Fursetler, forum, elanlar, umumi chat ve qrup chat bir platformada birlesir.
+            Interface sade saxlanilib ki, rahat istifade olunsun.
           </p>
-          <div class="hero-actions">
-            <a class="btn btn-primary" href="#ai">AI Chat başlat</a>
-            <a class="btn btn-outline" href="#status">API statusunu yoxla</a>
+          <div class="actions">
+            <a class="btn btn-primary" href="/opportunities.html">Fursetlere bax</a>
+            <a class="btn btn-outline" href="/community.html">Community chat</a>
+            <a class="btn btn-outline" href="/profile.html">LinkedIn tipli profil</a>
           </div>
-        </div>
+        </article>
 
-        <aside class="hero-card">
-          <h2>Bu versiyada hazırdır</h2>
-          <ul>
-            <li>Express backend + OpenAI chat endpoint</li>
-            <li>Supabase Postgres bağlantı testi</li>
-            <li>SMTP test endpoint</li>
-            <li>Deploy üçün ENV hazır konfiqurasiya</li>
-          </ul>
+        <aside class="card">
+          <h2 class="page-title" style="font-size: 1.2rem">Platforma statistikasi</h2>
+          <div class="list">
+            <div class="list-item"><strong id="count-users">0</strong> istifadeci</div>
+            <div class="list-item"><strong id="count-opportunities">0</strong> furset</div>
+            <div class="list-item"><strong id="count-threads">0</strong> forum movzusu</div>
+            <div class="list-item"><strong id="count-announcements">0</strong> aktiv elan</div>
+          </div>
         </aside>
       </section>
 
-      <section class="section" id="features">
-        <article class="feature-card">
-          <h3>Fürsət axını</h3>
-          <p>İnternship, volunteer və event məlumatlarını bir yerdə toplamaq üçün hazır baza.</p>
-        </article>
-        <article class="feature-card">
-          <h3>Forum və Community</h3>
-          <p>Thread və qrup müzakirə arxitekturası növbəti mərhələ üçün skeletdə mövcuddur.</p>
-        </article>
-        <article class="feature-card">
-          <h3>AI inteqrasiya</h3>
-          <p>OpenAI chat endpoint ilə real vaxt sual-cavab və istiqamətləndirmə.</p>
-        </article>
+      <section class="card" style="margin-top: 0.8rem">
+        <h2 class="page-title" style="font-size: 1.2rem">Son elanlar</h2>
+        <div id="home-announcements" class="list"></div>
       </section>
 
-      <section class="section status-grid" id="status">
-        <article class="status-card">
-          <h3>Health Check</h3>
-          <p id="health-status" class="status pending">Yoxlanılır...</p>
-          <small>/health</small>
-        </article>
-        <article class="status-card">
-          <h3>Database Test</h3>
-          <p id="db-status" class="status pending">Yoxlanılır...</p>
-          <small>/db-test</small>
-        </article>
+      <section class="card" style="margin-top: 0.8rem">
+        <h2 class="page-title" style="font-size: 1.2rem">Son forum movzulari</h2>
+        <div id="home-threads" class="list"></div>
       </section>
 
-      <section class="section chat-section" id="ai">
-        <header>
-          <h2>AI Chatbot</h2>
-          <p>Mesajı yazın, server `/chat` endpoint-i üzərindən OpenAI ilə cavab versin.</p>
-        </header>
-
-        <div class="chat-shell">
-          <div id="chat-log" class="chat-log"></div>
-
-          <div class="quick-prompts">
-            <button data-prompt type="button">Mənə data internship üçün plan ver</button>
-            <button data-prompt type="button">CV-ni necə gücləndirim?</button>
-            <button data-prompt type="button">Hackathon komandası necə qurulur?</button>
-          </div>
-
-          <form id="chat-form" class="chat-form">
-            <input
-              id="chat-input"
-              type="text"
-              maxlength="800"
-              placeholder="Sualınızı yazın..."
-              required
-            />
-            <button class="btn btn-primary" type="submit">Göndər</button>
-          </form>
-          <p id="chat-error" class="chat-error"></p>
-        </div>
-      </section>
-
-      <footer class="footer">
-        <span>© 2026 KutleWe</span>
-        <span>Built for production-ready deploy flow</span>
-      </footer>
+      <footer class="footer">© 2026 KutleWe</footer>
     </main>
   </body>
 </html>

@@ -1,122 +1,131 @@
-const healthNode = document.getElementById("health-status");
-const dbNode = document.getElementById("db-status");
-const chatForm = document.getElementById("chat-form");
-const chatInput = document.getElementById("chat-input");
-const chatLog = document.getElementById("chat-log");
-const chatError = document.getElementById("chat-error");
-const quickPromptButtons = document.querySelectorAll("[data-prompt]");
+const STORAGE_KEY = "kutlewe_token";
 
-init();
+const authState = {
+  user: null,
+  token: localStorage.getItem(STORAGE_KEY) || ""
+};
 
-function init() {
-  checkHealth();
-  checkDb();
-  setupChat();
+window.KutleWeAuth = {
+  clearToken,
+  getAuthHeaders,
+  getCurrentUser: () => authState.user,
+  getToken: () => authState.token,
+  logout,
+  refreshUser,
+  setToken
+};
+
+bootstrap();
+
+async function bootstrap() {
+  markActiveMenu();
+  await refreshUser();
+  renderAuthState();
+  bindAuthActions();
 }
 
-async function checkHealth() {
-  if (!healthNode) return;
-  try {
-    const response = await fetch("/health");
-    const data = await response.json();
-    if (!response.ok || !data.ok) {
-      throw new Error(data?.message || "Health endpoint error");
-    }
-    healthNode.textContent = "Server aktivdir";
-    healthNode.className = "status ok";
-  } catch (error) {
-    healthNode.textContent = `Xəta: ${error.message}`;
-    healthNode.className = "status error";
+function setToken(token) {
+  authState.token = String(token || "").trim();
+  if (authState.token) {
+    localStorage.setItem(STORAGE_KEY, authState.token);
+  } else {
+    localStorage.removeItem(STORAGE_KEY);
   }
 }
 
-async function checkDb() {
-  if (!dbNode) return;
-  try {
-    const response = await fetch("/db-test");
-    const data = await response.json();
-    if (!response.ok || !data.ok) {
-      throw new Error(data?.message || data?.error || "DB test error");
-    }
-    dbNode.textContent = `DB bağlıdır (${new Date(data.now).toLocaleString("az-AZ")})`;
-    dbNode.className = "status ok";
-  } catch (error) {
-    dbNode.textContent = `DB xətası: ${error.message}`;
-    dbNode.className = "status error";
-  }
+function clearToken() {
+  setToken("");
+  authState.user = null;
 }
 
-function setupChat() {
-  if (!chatForm || !chatInput || !chatLog) return;
+function getAuthHeaders() {
+  const headers = { "Content-Type": "application/json" };
+  if (authState.token) {
+    headers.Authorization = `Bearer ${authState.token}`;
+  }
+  return headers;
+}
 
-  addBubble(
-    "bot",
-    "Salam. Mən KutleWe AI köməkçisiyəm. Karyera, internship və forum suallarını yaza bilərsiniz."
-  );
-
-  chatForm.addEventListener("submit", async (event) => {
-    event.preventDefault();
-    const message = String(chatInput.value || "").trim();
-    if (!message) return;
-    chatInput.value = "";
-    await sendMessage(message);
+function markActiveMenu() {
+  const normalizedPath =
+    window.location.pathname === "/" ? "/index.html" : window.location.pathname;
+  const links = document.querySelectorAll("a[data-nav]");
+  links.forEach((link) => {
+    const href = link.getAttribute("href");
+    if (href === normalizedPath) {
+      link.classList.add("active");
+    }
   });
+}
 
-  quickPromptButtons.forEach((button) => {
+function renderAuthState() {
+  const guestElements = document.querySelectorAll('[data-auth="guest"]');
+  const userElements = document.querySelectorAll('[data-auth="user"]');
+  const userNameElements = document.querySelectorAll("[data-user-name]");
+  const isLoggedIn = Boolean(authState.user);
+
+  guestElements.forEach((element) => {
+    element.hidden = isLoggedIn;
+  });
+  userElements.forEach((element) => {
+    element.hidden = !isLoggedIn;
+  });
+  userNameElements.forEach((element) => {
+    element.textContent = isLoggedIn ? authState.user.name || authState.user.email : "";
+  });
+}
+
+async function refreshUser() {
+  if (!authState.token) {
+    authState.user = null;
+    renderAuthState();
+    return null;
+  }
+
+  try {
+    const response = await fetch("/api/auth/me", {
+      headers: getAuthHeaders()
+    });
+
+    if (!response.ok) {
+      clearToken();
+      renderAuthState();
+      return null;
+    }
+
+    const payload = await response.json();
+    authState.user = payload.user || null;
+    renderAuthState();
+    return authState.user;
+  } catch (_error) {
+    return null;
+  }
+}
+
+async function logout() {
+  try {
+    if (authState.token) {
+      await fetch("/api/auth/logout", {
+        method: "POST",
+        headers: getAuthHeaders()
+      });
+    }
+  } catch (_error) {
+    // ignore logout errors
+  } finally {
+    clearToken();
+    renderAuthState();
+  }
+}
+
+function bindAuthActions() {
+  const logoutButtons = document.querySelectorAll("[data-action='logout']");
+  logoutButtons.forEach((button) => {
     button.addEventListener("click", async () => {
-      const prompt = String(button.textContent || "").trim();
-      if (!prompt) return;
-      await sendMessage(prompt);
+      await logout();
+      if (window.location.pathname !== "/index.html" && window.location.pathname !== "/") {
+        window.location.href = "/index.html";
+      }
     });
   });
-}
-
-async function sendMessage(message) {
-  addBubble("user", message);
-  setChatError("");
-  addBubble("bot", "Yazılır...", "typing");
-
-  try {
-    const response = await fetch("/chat", {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ message })
-    });
-    const data = await response.json();
-    removeTypingBubble();
-
-    if (!response.ok || !data.ok) {
-      throw new Error(data?.message || "Chat endpoint xətası");
-    }
-
-    addBubble("bot", data.reply || "Cavab alınmadı.");
-    if (data.source === "fallback") {
-      setChatError("OpenAI kvota/xəta səbəbilə fallback cavab göstərildi.");
-    }
-  } catch (error) {
-    removeTypingBubble();
-    setChatError(error.message);
-    addBubble("bot", "Hazırda cavab ala bilmədim. Bir azdan yenidən yoxlayın.");
-  }
-}
-
-function addBubble(type, text, id = "") {
-  if (!chatLog) return;
-  const bubble = document.createElement("div");
-  bubble.className = `bubble ${type}`;
-  if (id) bubble.dataset.id = id;
-  bubble.textContent = text;
-  chatLog.appendChild(bubble);
-  chatLog.scrollTop = chatLog.scrollHeight;
-}
-
-function removeTypingBubble() {
-  if (!chatLog) return;
-  const typing = chatLog.querySelector('[data-id="typing"]');
-  if (typing) typing.remove();
-}
-
-function setChatError(message) {
-  if (!chatError) return;
-  chatError.textContent = message || "";
 }
