@@ -1,3 +1,4 @@
+const path = require("path");
 const express = require("express");
 const dotenv = require("dotenv");
 const nodemailer = require("nodemailer");
@@ -15,6 +16,9 @@ const openai = new OpenAI({
 });
 
 app.use(express.json({ limit: "1mb" }));
+
+// Static fayllar (public qovlugu)
+app.use(express.static(path.join(__dirname, "public")));
 
 app.use((req, res, next) => {
   res.setHeader("Access-Control-Allow-Origin", "*");
