@@ -1,0 +1,129 @@
+<!doctype html>
+<html lang="az">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>KutleWe | Smart Community Platform</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&family=Syne:wght@600;700;800&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="/assets/css/app.css" />
+    <script defer src="/assets/js/main.js"></script>
+  </head>
+  <body>
+    <div class="noise"></div>
+
+    <main class="container">
+      <header class="topbar">
+        <a class="brand" href="/">
+          <span class="brand-mark">KW</span>
+          <span>
+            <strong>KutleWe</strong>
+            <small>Gənclər üçün vahid imkan mərkəzi</small>
+          </span>
+        </a>
+
+        <nav class="menu">
+          <a href="#features">Xüsusiyyətlər</a>
+          <a href="#status">Status</a>
+          <a href="#ai">AI Köməkçi</a>
+          <a href="https://kutle-we-np8d60k3z-sixis-projects-05eeda55.vercel.app" target="_blank" rel="noreferrer">Deploy URL</a>
+        </nav>
+      </header>
+
+      <section class="hero">
+        <div class="hero-copy">
+          <p class="pill">Mərkəzləşdirilmiş platforma</p>
+          <h1>
+            KutleWe ilə
+            <span>fırsət, forum və AI dəstəyi</span>
+            eyni məkanda.
+          </h1>
+          <p>
+            Platforma gənclərin fürsət axtarışı, müzakirə mühiti və community əlaqəsini
+            sadə, sürətli və vizual olaraq aydın təcrübəyə çevirir.
+          </p>
+          <div class="hero-actions">
+            <a class="btn btn-primary" href="#ai">AI Chat başlat</a>
+            <a class="btn btn-outline" href="#status">API statusunu yoxla</a>
+          </div>
+        </div>
+
+        <aside class="hero-card">
+          <h2>Bu versiyada hazırdır</h2>
+          <ul>
+            <li>Express backend + OpenAI chat endpoint</li>
+            <li>Supabase Postgres bağlantı testi</li>
+            <li>SMTP test endpoint</li>
+            <li>Deploy üçün ENV hazır konfiqurasiya</li>
+          </ul>
+        </aside>
+      </section>
+
+      <section class="section" id="features">
+        <article class="feature-card">
+          <h3>Fürsət axını</h3>
+          <p>İnternship, volunteer və event məlumatlarını bir yerdə toplamaq üçün hazır baza.</p>
+        </article>
+        <article class="feature-card">
+          <h3>Forum və Community</h3>
+          <p>Thread və qrup müzakirə arxitekturası növbəti mərhələ üçün skeletdə mövcuddur.</p>
+        </article>
+        <article class="feature-card">
+          <h3>AI inteqrasiya</h3>
+          <p>OpenAI chat endpoint ilə real vaxt sual-cavab və istiqamətləndirmə.</p>
+        </article>
+      </section>
+
+      <section class="section status-grid" id="status">
+        <article class="status-card">
+          <h3>Health Check</h3>
+          <p id="health-status" class="status pending">Yoxlanılır...</p>
+          <small>/health</small>
+        </article>
+        <article class="status-card">
+          <h3>Database Test</h3>
+          <p id="db-status" class="status pending">Yoxlanılır...</p>
+          <small>/db-test</small>
+        </article>
+      </section>
+
+      <section class="section chat-section" id="ai">
+        <header>
+          <h2>AI Chatbot</h2>
+          <p>Mesajı yazın, server `/chat` endpoint-i üzərindən OpenAI ilə cavab versin.</p>
+        </header>
+
+        <div class="chat-shell">
+          <div id="chat-log" class="chat-log"></div>
+
+          <div class="quick-prompts">
+            <button data-prompt type="button">Mənə data internship üçün plan ver</button>
+            <button data-prompt type="button">CV-ni necə gücləndirim?</button>
+            <button data-prompt type="button">Hackathon komandası necə qurulur?</button>
+          </div>
+
+          <form id="chat-form" class="chat-form">
+            <input
+              id="chat-input"
+              type="text"
+              maxlength="800"
+              placeholder="Sualınızı yazın..."
+              required
+            />
+            <button class="btn btn-primary" type="submit">Göndər</button>
+          </form>
+          <p id="chat-error" class="chat-error"></p>
+        </div>
+      </section>
+
+      <footer class="footer">
+        <span>© 2026 KutleWe</span>
+        <span>Built for production-ready deploy flow</span>
+      </footer>
+    </main>
+  </body>
+</html>
