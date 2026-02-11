@@ -6,12 +6,14 @@ if (!connectionString) {
   console.warn("DATABASE_URL bosdur. /db-test endpoint-i xeta verecek.");
 }
 
-const pool = new Pool({
-  connectionString,
-  ssl: {
-    rejectUnauthorized: false
-  }
-});
+const pool = connectionString
+  ? new Pool({
+      connectionString,
+      ssl: {
+        rejectUnauthorized: false
+      }
+    })
+  : null;
 
 module.exports = {
   pool

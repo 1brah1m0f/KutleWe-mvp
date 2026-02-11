@@ -3,9 +3,9 @@ const dotenv = require("dotenv");
 const nodemailer = require("nodemailer");
 const OpenAI = require("openai");
 
-const { pool } = require("./db");
-
 dotenv.config();
+
+const { pool } = require("./db");
 
 const app = express();
 const port = Number(process.env.PORT || 3000);
@@ -31,6 +31,14 @@ app.get("/health", (_req, res) => {
 });
 
 app.get("/db-test", async (_req, res) => {
+  if (!pool) {
+    return res.status(500).json({
+      ok: false,
+      error: "DATABASE_URL_MISSING",
+      message: "DATABASE_URL env tapilmadi"
+    });
+  }
+
   try {
     const result = await pool.query("select now() as now");
     res.json({
