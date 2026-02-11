@@ -1,0 +1,108 @@
+<!doctype html>
+<html lang="az">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>KutleWe | Forum</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Sora:wght@400;500;600;700;800&family=Space+Grotesk:wght@500;700&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="/assets/css/app.css" />
+    <script defer src="/assets/js/main.js"></script>
+    <script defer src="/assets/js/forum.js"></script>
+  </head>
+  <body>
+    <main class="site-shell">
+      <header class="topbar">
+        <a class="brand" href="/index.html">
+          <span class="brand-mark">K</span>
+          <span class="brand-copy">
+            <strong>KutleWe</strong>
+            <small>Fürsətlər + Community</small>
+          </span>
+        </a>
+
+        <nav class="menu" aria-label="Əsas menyu">
+          <a data-nav href="/index.html">Ana</a>
+          <a data-nav href="/opportunities.html">Fürsətlər</a>
+          <a data-nav href="/forum.html">Forum</a>
+          <a data-nav href="/about.html">Haqqımızda</a>
+          <a class="btn btn-outline" href="/forum.html">Profil yarat</a>
+        </nav>
+      </header>
+
+      <section class="page-hero">
+        <h1>İnteraktiv Müzakirə və Dəstək Paneli</h1>
+        <p>
+          Burada hər mövzu ayrıca thread kimi açılır. Başlığa daxil olaraq cavab formu ilə
+          müzakirəyə qoşula bilərsiniz.
+        </p>
+      </section>
+
+      <section class="forum-layout">
+        <article class="surface">
+          <h2>Mövzular</h2>
+          <p id="thread-meta" class="result-meta">Yüklənir...</p>
+          <div id="thread-list" class="thread-list"></div>
+        </article>
+
+        <aside class="surface side-form">
+          <h2>Yeni thread aç</h2>
+          <form id="thread-form">
+            <div class="field">
+              <label for="author">Adınız</label>
+              <input id="author" name="author" placeholder="Məsələn: Aysel" />
+            </div>
+
+            <div class="field">
+              <label for="tag">Tag</label>
+              <select id="tag" name="tag">
+                <option value="">Seçin</option>
+                <option value="Təcrübə">Təcrübə</option>
+                <option value="Könüllülük">Könüllülük</option>
+                <option value="Hakaton">Hakaton</option>
+                <option value="Karyera">Karyera</option>
+              </select>
+            </div>
+
+            <div class="field">
+              <label for="title">Başlıq</label>
+              <input
+                id="title"
+                name="title"
+                required
+                minlength="8"
+                placeholder="Məsələn: Data internship üçün portfolio vacibdirmi?"
+              />
+            </div>
+
+            <div class="field">
+              <label for="body">Mövzu mətni</label>
+              <textarea
+                id="body"
+                name="body"
+                required
+                minlength="15"
+                placeholder="Sualınızı aydın şəkildə yazın ki, icmadan düzgün cavab alasınız."
+              ></textarea>
+            </div>
+
+            <div class="filter-actions">
+              <button class="btn btn-primary" type="submit">Thread yarat</button>
+            </div>
+          </form>
+          <p id="thread-status" class="status-message"></p>
+        </aside>
+      </section>
+
+      <footer class="footer">
+        © 2026 KutleWe. Gənclər üçün imkanlar və icma vahid məkanda.
+      </footer>
+    </main>
+
+    <div id="chatbot-root"></div>
+  </body>
+</html>
