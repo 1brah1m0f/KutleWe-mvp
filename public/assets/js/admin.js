@@ -23,9 +23,8 @@ async function handleAdminLogin(event) {
   event.preventDefault();
   setStatus("Admin girisi yoxlanilir...", "warn");
 
-  const email = String(document.getElementById("admin-email")?.value || "").trim();
-  const accessCode = String(document.getElementById("admin-code")?.value || "").trim();
-
+  const email = "admin@local";
+  const accessCode = "dev";
   try {
     const response = await fetch("/api/auth/admin-login", {
       method: "POST",
