@@ -24,6 +24,13 @@ const allowDebugOtp =
   String(process.env.ALLOW_DEBUG_OTP || "").toLowerCase() === "true" ||
   process.env.NODE_ENV !== "production";
 
+function methodHint(res, endpoint) {
+  return res.status(405).json({
+    ok: false,
+    message: `${endpoint} endpoint-i POST ile cagrilmalidir.`
+  });
+}
+
 function parseId(value) {
   const numericValue = Number(value);
   if (!Number.isInteger(numericValue) || numericValue <= 0) {
@@ -163,6 +170,7 @@ router.post("/auth/request-code", async (req, res, next) => {
     next(error);
   }
 });
+router.get("/auth/request-code", (_req, res) => methodHint(res, "/api/auth/request-code"));
 
 router.post("/auth/reset-code", async (req, res, next) => {
   try {
@@ -187,6 +195,7 @@ router.post("/auth/reset-code", async (req, res, next) => {
     next(error);
   }
 });
+router.get("/auth/reset-code", (_req, res) => methodHint(res, "/api/auth/reset-code"));
 
 router.post("/auth/verify-code", async (req, res, next) => {
   try {
@@ -219,6 +228,7 @@ router.post("/auth/verify-code", async (req, res, next) => {
     next(error);
   }
 });
+router.get("/auth/verify-code", (_req, res) => methodHint(res, "/api/auth/verify-code"));
 
 router.post("/auth/admin-login", async (req, res, next) => {
   try {
