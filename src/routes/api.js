@@ -20,6 +20,9 @@ const router = express.Router();
 
 const ADMIN_EMAIL = normalizeEmail(process.env.ADMIN_EMAIL || "admin@kutlewe.az");
 const ADMIN_ACCESS_CODE = String(process.env.ADMIN_ACCESS_CODE || "KutleWeAdmin2026").trim();
+const allowDebugOtp =
+  String(process.env.ALLOW_DEBUG_OTP || "").toLowerCase() === "true" ||
+  process.env.NODE_ENV !== "production";
 
 function parseId(value) {
   const numericValue = Number(value);
@@ -154,7 +157,7 @@ router.post("/auth/request-code", async (req, res, next) => {
       expiresAt: issued.expiresAt,
       delivered: mailResult.delivered,
       message: mailResult.message,
-      debugCode: mailResult.delivered ? undefined : issued.code
+      debugCode: !mailResult.delivered && allowDebugOtp ? issued.code : undefined
     });
   } catch (error) {
     next(error);
@@ -178,7 +181,7 @@ router.post("/auth/reset-code", async (req, res, next) => {
       expiresAt: issued.expiresAt,
       delivered: mailResult.delivered,
       message: "Yeni kod gonderildi.",
-      debugCode: mailResult.delivered ? undefined : issued.code
+      debugCode: !mailResult.delivered && allowDebugOtp ? issued.code : undefined
     });
   } catch (error) {
     next(error);
